@@ -8,8 +8,8 @@ on:
   push:
     branches: [main]
     paths:
-      - "trend_hunter_pro.py"
-      - "sistema_monetizacao.py"
+      - "automation/trend_hunter_pro.py"
+      - "automation/sistema_monetizacao.py"
       - ".github/workflows/**"
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
       - name: 📊 Update Trends
         run: |
           echo "🚀 Iniciando atualização de tendências..."
-          python trend_hunter_pro.py
+          python automation/trend_hunter_pro.py
           echo "✅ Tendências atualizadas!"
 
       - name: 💰 Execute Monetização
@@ -55,7 +55,7 @@ jobs:
           echo "{\"access_token\": \"$WHATSAPP_ACCESS_TOKEN\", \"phone_number_id\": \"$WHATSAPP_PHONE_ID\"}" > config_whatsapp.json
 
           # Executa sistema de monetização
-          python sistema_monetizacao.py
+          python automation/sistema_monetizacao.py
           echo "✅ Monetização executada!"
 
       - name: 📄 Commit Updated Files

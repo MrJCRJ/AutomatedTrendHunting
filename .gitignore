@@ -17,6 +17,11 @@ cache/
 # Backups com dados sensíveis
 backups/*.json
 relatorios/*.json
+configs/
+monetizacao_config.json
+__pycache__/
+tools/*.log
+tools/tmp/
 
 # Arquivos de sistema
 .DS_Store

@@ -1,67 +1,75 @@
-# TrendHunter MVP
+﻿# TrendHunter (Produção)
 
-🔥 **Publicado em minutos!** Este é um MVP ultra-rápido para validar a ideia de caça às tendências.
+Plataforma automatizada para descoberta e distribuição de tendências com monetização integrada.
 
-## 🚀 Como Publicar AGORA (3 minutos)
+## 🚀 Visão Geral
+- Coleta automática de tendências (Google Trends)
+- Distribuição multicanal (Newsletter, Telegram, WhatsApp, Push)
+- Monetização via Google AdSense
+- Infraestrutura automatizada (GitHub Actions)
 
-### Opção 1: Vercel (Recomendado)
+## 📂 Estrutura
+```
+automation/          # Scripts de coleta e distribuição
+	trend_hunter_pro.py
+	sistema_monetizacao.py
+	newsletter_mailchimp.py
+	telegram_bot.py
+	whatsapp_business.py
+	diagnostico.py
+	teste_visual.py
+	trend_hunter.py
 
-1. Acesse [vercel.com](https://vercel.com)
-2. Conecte seu GitHub
-3. Importe este repositório
-4. Deploy automático!
+public/              # (Reservado para assets estáticos futuros)
 
-### Opção 2: Netlify
+docs/                # Documentação detalhada
+	README_MONETIZACAO.md
+	PRODUCAO_COMPLETA.md
+	CONFIGURACAO_APIS.md
+	ADSENSE_VERIFICACAO.md
+	AUTOMACAO.md
+	GUIA_ATUALIZACAO.md
 
-1. Acesse [netlify.com](https://netlify.com)
-2. Arraste a pasta inteira para o deploy
-3. Pronto!
-
-### Opção 3: GitHub Pages
-
-```bash
-# No terminal:
-git add .
-git commit -m "MVP inicial"
-git push origin main
-# Ative GitHub Pages nas configurações do repo
+.github/workflows/   # Automação CI/CD e coleta agendada
 ```
 
-## 📈 Estratégia MVP
+## � Workflows Principais
+- `trend-automation.yml` → Executa coleta e monetização a cada 6h
+- `deploy.yml` → Deploy automático (Vercel/Netlify)
 
-**Princípio**: Publicar HOJE para validar interesse antes de desenvolver APIs complexas.
-
-### O que tem agora:
-
-- ✅ Landing page funcional
-- ✅ 5 tendências exemplo (manualmente curadas)
-- ✅ Captura de email para lista
-- ✅ Design responsivo
-- ✅ Espaços para Google AdSense
-- ✅ SEO básico
-
-### Próximos passos (após feedback):
-
-1. **Semana 1**: Integrar Google Forms para emails
-2. **Semana 2**: Script Python para Google Trends
-3. **Semana 3**: Automatizar atualizações
-4. **Semana 4**: Monetização real
-
-## 💰 Monetização Imediata
-
-1. **Google AdSense**: Substitua `ca-pub-XXXXXXXXXXXXXXXXX` no HTML
-2. **Afiliados**: Adicione links de ferramentas/cursos relacionados
-3. **Newsletter**: Use Mailchimp/ConvertKit gratuito
-
-## 🎯 Próxima Iteração
-
-Quando tiver os primeiros usuários:
-
-```bash
-# Adicionar Google Trends real
-pip install pytrends
-# Adicionar banco de dados simples
-# Automatizar com GitHub Actions
+## 🔐 Secrets Necessárias
+Configurar em GitHub → Settings → Secrets → Actions:
+```
+MAILCHIMP_API_KEY
+MAILCHIMP_AUDIENCE_ID
+TELEGRAM_BOT_TOKEN
+TELEGRAM_CHANNEL_ID
+WHATSAPP_ACCESS_TOKEN
+WHATSAPP_PHONE_ID
+VERCEL_TOKEN (opcional)
+VERCEL_ORG_ID (opcional)
+VERCEL_PROJECT_ID (opcional)
 ```
 
-**Meta**: 100 emails em 30 dias = validação confirmada!
+## 📊 Arquivos Públicos Relevantes
+- `index.html`
+- `politica-privacidade.html`
+- `ads.txt`
+- `robots.txt`
+- `sitemap.xml`
+
+## 🛠 Manutenção
+Scripts auxiliares (ex: `configurador.py`, `monitor_producao.py`) podem ser movidos depois para `tools/` se ainda forem necessários localmente. Não são exigidos em produção.
+
+## 📘 Documentação
+Leia em `docs/`:
+- `PRODUCAO_COMPLETA.md` – Guia de produção
+- `README_MONETIZACAO.md` – Estratégia de monetização
+- `CONFIGURACAO_APIS.md` – Setup seguro
+- `ADSENSE_VERIFICACAO.md` – Checklist AdSense
+
+## ✅ Status
+Produção pronta para operar 24/7 com automação e monetização ativa.
+
+---
+© 2025 TrendHunter
