@@ -1,6 +1,2 @@
-# TrendHunter - Automação Diária
-# Executa todos os dias às 9h (horário local)
-0 9 * * * cd /home/josecicero/Documentos/Clones/AutomatedTrendHunting && python3 trend_hunter.py >> logs/cron.log 2>&1
-
-# Opcional: Backup semanal aos domingos às 18h
-0 18 * * 0 cd /home/josecicero/Documentos/Clones/AutomatedTrendHunting && tar -czf backups/backup_$(date +\%Y\%m\%d).tar.gz . >> logs/backup.log 2>&1
+# TrendHunter - Automação
+0 */6 * * * cd /home/josecicero/Documentos/Clones/AutomatedTrendHunting && ./automacao_trendhunter.sh >> logs/trendhunter.log 2>&1

@@ -1,436 +1,445 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TrendHunter - Painel de Controle</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .controls {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .controls {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .control-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .control-row:last-child {
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+
+      .control-info {
+        flex: 1;
+      }
+
+      .control-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .control-desc {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: #667eea;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #5a6fd8;
+        transform: translateY(-2px);
+      }
+
+      .btn-success {
+        background: #51cf66;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #40c057;
+      }
+
+      .btn-warning {
+        background: #ffd43b;
+        color: #333;
+      }
+
+      .btn-warning:hover {
+        background: #ffcc02;
+      }
+
+      .logs {
+        background: #1a1a1a;
+        color: #00ff00;
+        padding: 20px;
+        border-radius: 15px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 30px;
+      }
+
+      .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+      }
+
+      .status-online {
+        background: #51cf66;
+      }
+
+      .status-offline {
+        background: #fa5252;
+      }
+
+      .status-warning {
+        background: #ffd43b;
+      }
+
+      .footer {
+        text-align: center;
+        color: white;
+        margin-top: 30px;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
         .control-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+          flex-direction: column;
+          gap: 15px;
         }
-        
-        .control-row:last-child {
-            margin-bottom: 0;
-            border-bottom: none;
+
+        .header h1 {
+          font-size: 2rem;
         }
-        
-        .control-info {
-            flex: 1;
-        }
-        
-        .control-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .control-desc {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
-        
-        .btn-success {
-            background: #51cf66;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #40c057;
-        }
-        
-        .btn-warning {
-            background: #ffd43b;
-            color: #333;
-        }
-        
-        .btn-warning:hover {
-            background: #ffcc02;
-        }
-        
-        .logs {
-            background: #1a1a1a;
-            color: #00ff00;
-            padding: 20px;
-            border-radius: 15px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 30px;
-        }
-        
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-        
-        .status-online {
-            background: #51cf66;
-        }
-        
-        .status-offline {
-            background: #fa5252;
-        }
-        
-        .status-warning {
-            background: #ffd43b;
-        }
-        
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 30px;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 768px) {
-            .control-row {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <h1>💰 TrendHunter Dashboard</h1>
-            <p>Painel de Controle da Monetização</p>
+      <div class="header">
+        <h1>💰 TrendHunter Dashboard</h1>
+        <p>Painel de Controle da Monetização</p>
+      </div>
+
+      <!-- Estatísticas -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number" id="total-trends">-</div>
+          <div class="stat-label">Tendências Processadas</div>
         </div>
-        
-        <!-- Estatísticas -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">📊</div>
-                <div class="stat-number" id="total-trends">-</div>
-                <div class="stat-label">Tendências Processadas</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">📧</div>
-                <div class="stat-number" id="newsletter-sent">-</div>
-                <div class="stat-label">Newsletters Enviadas</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">💎</div>
-                <div class="stat-number" id="premium-subs">-</div>
-                <div class="stat-label">Assinantes Premium</div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-number" id="revenue-estimate">R$ -</div>
-                <div class="stat-label">Receita Estimada</div>
-            </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📧</div>
+          <div class="stat-number" id="newsletter-sent">-</div>
+          <div class="stat-label">Newsletters Enviadas</div>
         </div>
-        
-        <!-- Controles -->
-        <div class="controls">
-            <h3>🎮 Controles do Sistema</h3>
-            <br>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">
-                        <span class="status-indicator status-online"></span>
-                        Sistema de Tendências
-                    </div>
-                    <div class="control-desc">Atualização automática de tendências do Google Trends</div>
-                </div>
-                <button class="btn btn-primary" onclick="executarTendencias()">
-                    🔄 Atualizar Agora
-                </button>
-            </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">
-                        <span class="status-indicator status-online"></span>
-                        Sistema de Monetização
-                    </div>
-                    <div class="control-desc">Distribuição automática por todos os canais</div>
-                </div>
-                <button class="btn btn-success" onclick="executarMonetizacao()">
-                    💰 Distribuir Agora
-                </button>
-            </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">
-                        <span class="status-indicator status-warning"></span>
-                        Newsletter Mailchimp
-                    </div>
-                    <div class="control-desc">Campanhas de email automáticas</div>
-                </div>
-                <button class="btn btn-warning" onclick="testarNewsletter()">
-                    📧 Testar Newsletter
-                </button>
-            </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">
-                        <span class="status-indicator status-warning"></span>
-                        Telegram Bot
-                    </div>
-                    <div class="control-desc">Alertas públicos de tendências</div>
-                </div>
-                <button class="btn btn-primary" onclick="testarTelegram()">
-                    📱 Testar Telegram
-                </button>
-            </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">
-                        <span class="status-indicator status-offline"></span>
-                        WhatsApp Business
-                    </div>
-                    <div class="control-desc">Alertas premium para assinantes</div>
-                </div>
-                <button class="btn btn-success" onclick="testarWhatsApp()">
-                    💎 Configurar Premium
-                </button>
-            </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">💎</div>
+          <div class="stat-number" id="premium-subs">-</div>
+          <div class="stat-label">Assinantes Premium</div>
         </div>
-        
-        <!-- Logs em Tempo Real -->
-        <div class="logs" id="system-logs">
-            <div>🚀 TrendHunter Sistema Iniciado...</div>
-            <div>📊 Aguardando comandos...</div>
-            <div>💡 Use os botões acima para executar ações</div>
+
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-number" id="revenue-estimate">R$ -</div>
+          <div class="stat-label">Receita Estimada</div>
         </div>
-        
-        <!-- Status dos Serviços -->
-        <div class="controls">
-            <h3>🔧 Status dos Serviços</h3>
-            <br>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">Google Analytics</div>
-                    <div class="control-desc">ID: G-49T4JYYWMB</div>
-                </div>
-                <span class="status-indicator status-online"></span>
-                <span>Online</span>
+      </div>
+
+      <!-- Controles -->
+      <div class="controls">
+        <h3>🎮 Controles do Sistema</h3>
+        <br />
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">
+              <span class="status-indicator status-online"></span>
+              Sistema de Tendências
             </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">Google AdSense</div>
-                    <div class="control-desc">Múltiplas inserções ativas</div>
-                </div>
-                <span class="status-indicator status-online"></span>
-                <span>Ativo</span>
+            <div class="control-desc">
+              Atualização automática de tendências do Google Trends
             </div>
-            
-            <div class="control-row">
-                <div class="control-info">
-                    <div class="control-title">Push Notifications</div>
-                    <div class="control-desc">Service Worker configurado</div>
-                </div>
-                <span class="status-indicator status-online"></span>
-                <span>Pronto</span>
-            </div>
+          </div>
+          <button class="btn btn-primary" onclick="executarTendencias()">
+            🔄 Atualizar Agora
+          </button>
         </div>
-        
-        <div class="footer">
-            <p>🎯 TrendHunter - Sistema de Monetização Automatizada</p>
-            <p>Última atualização: <span id="last-update">Carregando...</span></p>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">
+              <span class="status-indicator status-online"></span>
+              Sistema de Monetização
+            </div>
+            <div class="control-desc">
+              Distribuição automática por todos os canais
+            </div>
+          </div>
+          <button class="btn btn-success" onclick="executarMonetizacao()">
+            💰 Distribuir Agora
+          </button>
         </div>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">
+              <span class="status-indicator status-warning"></span>
+              Newsletter Mailchimp
+            </div>
+            <div class="control-desc">Campanhas de email automáticas</div>
+          </div>
+          <button class="btn btn-warning" onclick="testarNewsletter()">
+            📧 Testar Newsletter
+          </button>
+        </div>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">
+              <span class="status-indicator status-warning"></span>
+              Telegram Bot
+            </div>
+            <div class="control-desc">Alertas públicos de tendências</div>
+          </div>
+          <button class="btn btn-primary" onclick="testarTelegram()">
+            📱 Testar Telegram
+          </button>
+        </div>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">
+              <span class="status-indicator status-offline"></span>
+              WhatsApp Business
+            </div>
+            <div class="control-desc">Alertas premium para assinantes</div>
+          </div>
+          <button class="btn btn-success" onclick="testarWhatsApp()">
+            💎 Configurar Premium
+          </button>
+        </div>
+      </div>
+
+      <!-- Logs em Tempo Real -->
+      <div class="logs" id="system-logs">
+        <div>🚀 TrendHunter Sistema Iniciado...</div>
+        <div>📊 Aguardando comandos...</div>
+        <div>💡 Use os botões acima para executar ações</div>
+      </div>
+
+      <!-- Status dos Serviços -->
+      <div class="controls">
+        <h3>🔧 Status dos Serviços</h3>
+        <br />
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">Google Analytics</div>
+            <div class="control-desc">ID: G-49T4JYYWMB</div>
+          </div>
+          <span class="status-indicator status-online"></span>
+          <span>Online</span>
+        </div>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">Google AdSense</div>
+            <div class="control-desc">Múltiplas inserções ativas</div>
+          </div>
+          <span class="status-indicator status-online"></span>
+          <span>Ativo</span>
+        </div>
+
+        <div class="control-row">
+          <div class="control-info">
+            <div class="control-title">Push Notifications</div>
+            <div class="control-desc">Service Worker configurado</div>
+          </div>
+          <span class="status-indicator status-online"></span>
+          <span>Pronto</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>🎯 TrendHunter - Sistema de Monetização Automatizada</p>
+        <p>Última atualização: <span id="last-update">Carregando...</span></p>
+      </div>
     </div>
-    
+
     <script>
-        // Funções de controle
-        function adicionarLog(mensagem) {
-            const logs = document.getElementById('system-logs');
-            const agora = new Date().toLocaleTimeString();
-            logs.innerHTML += `<div>[${agora}] ${mensagem}</div>`;
-            logs.scrollTop = logs.scrollHeight;
-        }
-        
-        function executarTendencias() {
-            adicionarLog('🔄 Iniciando atualização de tendências...');
-            // Aqui você pode fazer uma chamada AJAX para executar o script
-            fetch('/api/executar-tendencias', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    adicionarLog('✅ Tendências atualizadas com sucesso!');
-                    atualizarEstatisticas();
-                })
-                .catch(error => {
-                    adicionarLog('❌ Erro ao atualizar tendências: ' + error);
-                });
-        }
-        
-        function executarMonetizacao() {
-            adicionarLog('💰 Iniciando distribuição multicanal...');
-            // Simula execução
-            setTimeout(() => {
-                adicionarLog('📧 Newsletter: Enviada');
-                adicionarLog('📱 Telegram: Publicado');
-                adicionarLog('💎 WhatsApp Premium: Enviado');
-                adicionarLog('✅ Distribuição concluída!');
-                atualizarEstatisticas();
-            }, 2000);
-        }
-        
-        function testarNewsletter() {
-            adicionarLog('📧 Testando Newsletter Mailchimp...');
-            adicionarLog('⚠️ Configure sua API key do Mailchimp primeiro');
-        }
-        
-        function testarTelegram() {
-            adicionarLog('📱 Testando Telegram Bot...');
-            adicionarLog('⚠️ Configure seu token do bot Telegram primeiro');
-        }
-        
-        function testarWhatsApp() {
-            adicionarLog('💎 Configurando WhatsApp Business...');
-            adicionarLog('⚠️ Configure as credenciais do WhatsApp Business API');
-        }
-        
-        function atualizarEstatisticas() {
-            // Simula dados em tempo real
-            document.getElementById('total-trends').textContent = Math.floor(Math.random() * 500) + 100;
-            document.getElementById('newsletter-sent').textContent = Math.floor(Math.random() * 50) + 10;
-            document.getElementById('premium-subs').textContent = Math.floor(Math.random() * 25) + 5;
-            document.getElementById('revenue-estimate').textContent = 'R$ ' + (Math.floor(Math.random() * 5000) + 1000);
-        }
-        
-        function atualizarHorario() {
-            document.getElementById('last-update').textContent = new Date().toLocaleString();
-        }
-        
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
+      // Funções de controle
+      function adicionarLog(mensagem) {
+        const logs = document.getElementById("system-logs");
+        const agora = new Date().toLocaleTimeString();
+        logs.innerHTML += `<div>[${agora}] ${mensagem}</div>`;
+        logs.scrollTop = logs.scrollHeight;
+      }
+
+      function executarTendencias() {
+        adicionarLog("🔄 Iniciando atualização de tendências...");
+        // Aqui você pode fazer uma chamada AJAX para executar o script
+        fetch("/api/executar-tendencias", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => {
+            adicionarLog("✅ Tendências atualizadas com sucesso!");
             atualizarEstatisticas();
-            atualizarHorario();
-            
-            // Atualiza horário a cada minuto
-            setInterval(atualizarHorario, 60000);
-            
-            // Simula logs automáticos
-            setInterval(() => {
-                const eventos = [
-                    '📊 Verificando novas tendências...',
-                    '🔍 Analisando dados do Google Trends...',
-                    '💰 Sistema de monetização ativo',
-                    '📈 Visitantes online: ' + (Math.floor(Math.random() * 50) + 10)
-                ];
-                const evento = eventos[Math.floor(Math.random() * eventos.length)];
-                adicionarLog(evento);
-            }, 30000);
-        });
+          })
+          .catch((error) => {
+            adicionarLog("❌ Erro ao atualizar tendências: " + error);
+          });
+      }
+
+      function executarMonetizacao() {
+        adicionarLog("💰 Iniciando distribuição multicanal...");
+        // Simula execução
+        setTimeout(() => {
+          adicionarLog("📧 Newsletter: Enviada");
+          adicionarLog("📱 Telegram: Publicado");
+          adicionarLog("💎 WhatsApp Premium: Enviado");
+          adicionarLog("✅ Distribuição concluída!");
+          atualizarEstatisticas();
+        }, 2000);
+      }
+
+      function testarNewsletter() {
+        adicionarLog("📧 Testando Newsletter Mailchimp...");
+        adicionarLog("⚠️ Configure sua API key do Mailchimp primeiro");
+      }
+
+      function testarTelegram() {
+        adicionarLog("📱 Testando Telegram Bot...");
+        adicionarLog("⚠️ Configure seu token do bot Telegram primeiro");
+      }
+
+      function testarWhatsApp() {
+        adicionarLog("💎 Configurando WhatsApp Business...");
+        adicionarLog("⚠️ Configure as credenciais do WhatsApp Business API");
+      }
+
+      function atualizarEstatisticas() {
+        // Simula dados em tempo real
+        document.getElementById("total-trends").textContent =
+          Math.floor(Math.random() * 500) + 100;
+        document.getElementById("newsletter-sent").textContent =
+          Math.floor(Math.random() * 50) + 10;
+        document.getElementById("premium-subs").textContent =
+          Math.floor(Math.random() * 25) + 5;
+        document.getElementById("revenue-estimate").textContent =
+          "R$ " + (Math.floor(Math.random() * 5000) + 1000);
+      }
+
+      function atualizarHorario() {
+        document.getElementById("last-update").textContent =
+          new Date().toLocaleString();
+      }
+
+      // Inicialização
+      document.addEventListener("DOMContentLoaded", function () {
+        atualizarEstatisticas();
+        atualizarHorario();
+
+        // Atualiza horário a cada minuto
+        setInterval(atualizarHorario, 60000);
+
+        // Simula logs automáticos
+        setInterval(() => {
+          const eventos = [
+            "📊 Verificando novas tendências...",
+            "🔍 Analisando dados do Google Trends...",
+            "💰 Sistema de monetização ativo",
+            "📈 Visitantes online: " + (Math.floor(Math.random() * 50) + 10),
+          ];
+          const evento = eventos[Math.floor(Math.random() * eventos.length)];
+          adicionarLog(evento);
+        }, 30000);
+      });
     </script>
-</body>
+  </body>
 </html>
