@@ -1,0 +1,3 @@
+google.com, pub-7400152355684556, DIRECT, f08c47fec0942fa0
+# Linha acima é obrigatória para verificação AdSense
+# Mantenha este arquivo acessível em https://SEU_DOMINIO/ads.txt

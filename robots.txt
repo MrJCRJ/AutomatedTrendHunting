@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://SEU_DOMINIO/sitemap.xml
+
+# Bloqueios opcionais (remover se quiser indexar tudo)
+# Disallow: /admin/
+# Disallow: /api/
