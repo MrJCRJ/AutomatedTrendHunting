@@ -8,12 +8,36 @@
 import crypto from 'crypto';
 
 export default function handler(req, res) {
+  // Headers básicos (simples; se precisar ampliar para CORS avançado ajustar aqui)
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(204).end();
+  }
+
+  if (req.method === 'GET') {
+    // Health check simples
+    return res.status(200).json({ status: 'ok', requires: 'POST password', expiresInSeconds: 3600 });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { password } = req.body || {};
+    let body = req.body;
+    if (!body || typeof body !== 'object') {
+      // Tenta parse manual se vier string
+      try {
+        body = JSON.parse(req.body || '{}');
+      } catch (_) {
+        body = {};
+      }
+    }
+    const { password } = body;
     const expected = process.env.DASHBOARD_PASSWORD;
 
     if (!expected) {
