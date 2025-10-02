@@ -105,6 +105,7 @@ Se quiser, posso já criar o script de checagem de configs e um exemplo de schem
 - [x] Helper padronizado de respostas `lib/apiResponse.js`
 - [x] Logger estruturado `lib/log.js`
 - [x] Teste inicial `tests/dashboard-auth.test.js` (execução via `npm test`)
+- [x] Endpoint alternativo Edge `api/dashboard-auth-edge.js`
 
 ## Como Usar
 
@@ -123,3 +124,17 @@ Se algum arquivo de config faltar, copie o respectivo `*.example` e ajuste os va
 3. Adicionar métricas simples (contagem de execuções + duração) e enrich de logs com `requestId`.
 4. Expandir validação para permitir flags de feature (ex: ativar/desativar canais de distribuição).
 5. Adicionar pipeline CI rodando `npm test` + `npm run check:configs`.
+
+---
+
+## Node vs Edge (dashboard-auth)
+
+| Aspecto                  | Node (Atual)                         | Edge (Alternativa)                            |
+| ------------------------ | ------------------------------------ | --------------------------------------------- |
+| Latência                 | Boa                                  | Melhor em regiões distribuídas                |
+| Crypto                   | Node `crypto`                        | Web Crypto API                                |
+| Cold Start               | Mais perceptível                     | Geralmente menor                              |
+| Acesso FS / libs nativas | Disponível                           | Limitado                                      |
+| Caso de uso ideal        | Lógica pesada, dependências diversas | Autenticação rápida, caching, geodistribuição |
+
+Escolha: manter Node para máxima compatibilidade; usar Edge se priorizar latência global e simplicidade.

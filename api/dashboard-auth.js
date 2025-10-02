@@ -8,15 +8,15 @@
 import crypto from 'crypto';
 import { ok, badRequest, unauthorized, methodNotAllowed, serverError } from '../lib/apiResponse.js';
 
-// Config explícita de runtime (Vercel). Node 18 já é padrão, mas isso torna a intenção clara.
-export const config = {
-  runtime: 'nodejs18.x'
-};
-
 export default function handler(req, res) {
   // Headers básicos (simples; se precisar ampliar para CORS avançado ajustar aqui)
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+  // Validação antecipada de ambiente essencial
+  if (!process.env.DASHBOARD_PASSWORD) {
+    return serverError(res, 'Missing environment: DASHBOARD_PASSWORD');
+  }
 
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
@@ -44,10 +44,6 @@ export default function handler(req, res) {
     }
     const { password } = body;
     const expected = process.env.DASHBOARD_PASSWORD;
-
-    if (!expected) {
-      return serverError(res, 'Dashboard password not configured');
-    }
 
     if (!password) {
       return badRequest(res, 'Missing password');
