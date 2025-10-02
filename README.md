@@ -74,12 +74,13 @@ O dashboard administrativo (`/dashboard.html`) agora exige autenticação via se
 1. Defina a secret `DASHBOARD_PASSWORD` (ex: "SenhaForte123!") no ambiente do deploy (Vercel ou GitHub Actions se for usar em funções customizadas).
 2. (Opcional) Defina `DASHBOARD_JWT_SECRET` para assinatura HMAC diferenciada do valor da senha.
 3. Fluxo:
-	- Usuário acessa `/dashboard.html`
-	- Overlay de login solicita senha
-	- Front faz `POST /api/dashboard-auth` → retorna token efêmero (1h)
-	- Token armazenado em `localStorage` (se "manter logado") ou `sessionStorage`
+   - Usuário acessa `/dashboard.html`
+   - Overlay de login solicita senha
+   - Front faz `POST /api/dashboard-auth` → retorna token efêmero (1h)
+   - Token armazenado em `localStorage` (se "manter logado") ou `sessionStorage`
 
 ### Endpoint
+
 ```
 POST /api/dashboard-auth
 Body: { "password": "<senha>" }
@@ -87,9 +88,11 @@ Resposta: { token: "<exp>.<hmac>", expiresIn: 3600 }
 ```
 
 ### Renovação de Sessão
+
 No momento não há refresh; após expirar (1h) o overlay volta a aparecer.
 
 ### Endurecimento Futuro (Sugestões)
+
 - Rate limiting básico (ex: armazenar contagem de tentativas em KV / Edge Config)
 - Bloqueio por IP após X falhas
 - Migrar para provider de auth (Clerk, Auth0) se escalar
