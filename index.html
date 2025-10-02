@@ -166,6 +166,22 @@
         border-radius: 4px;
         color: #666;
       }
+      
+      .ad-banner-inline {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: center;
+        margin: 30px 0;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+      }
+      
+      .ad-banner-cta {
+        background: #ffffff;
+        padding: 20px 0;
+        border-top: 1px solid #e9ecef;
+        border-bottom: 1px solid #e9ecef;
+      }
 
       @media (max-width: 768px) {
         h1 {
@@ -194,14 +210,15 @@
 
     <main class="main-content">
       <div class="container">
-        <!-- Ad Banner -->
+        <!-- Ad Banner Superior -->
         <div class="ad-banner">
           <ins
             class="adsbygoogle"
             style="display: block"
             data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
+            data-ad-slot="1234567890"
             data-ad-format="auto"
+            data-full-width-responsive="true"
           ></ins>
           <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
@@ -232,6 +249,21 @@
           </p>
         </div>
 
+        <!-- Ad Banner Meio -->
+        <div class="ad-banner-inline">
+          <ins
+            class="adsbygoogle"
+            style="display: block; text-align: center;"
+            data-ad-layout="in-article"
+            data-ad-format="fluid"
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+            data-ad-slot="9876543210"
+          ></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+
         <div class="trend-card">
           <h3 class="trend-title">🏠 Coworking Especializado (02/10)</h3>
           <span class="trend-growth">+132%</span>
@@ -244,6 +276,23 @@
 
         </div>
     </main>
+
+    <!-- Ad Banner Antes CTA -->
+    <div class="ad-banner-cta">
+      <div class="container">
+        <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+          data-ad-slot="1111222233"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
 
     <section class="cta-section">
       <div class="container">
@@ -262,6 +311,20 @@
           />
           <button type="submit" class="submit-btn">Quero Receber!</button>
         </form>
+
+        <!-- Push Notifications -->
+        <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+          <h3 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">🔔 Alertas Instantâneos</h3>
+          <p style="margin: 0 0 1rem 0; color: #666; font-size: 0.9rem;">
+            Receba notificações no seu dispositivo quando novas tendências explosivas forem identificadas!
+          </p>
+          <button id="notification-button" class="submit-btn" style="background: #28a745; width: auto; padding: 8px 16px; font-size: 14px;">
+            🔔 Ativar Alertas
+          </button>
+          <p id="notification-status" style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #666;">
+            🔕 Alertas desativados
+          </p>
+        </div>
 
         <p style="margin-top: 1rem; font-size: 0.9rem; color: #666">
           ✅ Relatórios semanais ✅ Análises exclusivas ✅ Oportunidades de
@@ -284,6 +347,9 @@
         </p>
       </div>
     </footer>
+
+    <!-- Push Notifications Script -->
+    <script src="push-notifications.js"></script>
 
     <script>
       // Formulário de email
