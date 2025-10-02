@@ -3,5 +3,11 @@
   "newslettersSent": 17,
   "premiumSubs": 17,
   "revenueEstimate": 5547,
+  "delta24h": {
+    "totalTrends": 0,
+    "newslettersSent": 0,
+    "premiumSubs": 0,
+    "revenueEstimate": 0
+  },
   "lastUpdated": "2025-10-02T21:00:00.000Z"
 }
