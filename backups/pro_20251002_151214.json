@@ -1,0 +1,30 @@
+{
+  "timestamp": "20251002_151214",
+  "data_coleta": "2025-10-02T15:12:14.696328",
+  "versao": "pro",
+  "total_tendencias": 3,
+  "fontes": {
+    "google_trends": 0,
+    "simuladas": 3
+  },
+  "tendencias": [
+    {
+      "termo": "E-commerce para Idosos (02/10)",
+      "categoria": "E-commerce",
+      "crescimento": 172,
+      "descricao": "População 60+ descobrindo compras online. Nicho de R$ 3 bilhões."
+    },
+    {
+      "termo": "Energia Solar Residencial (02/10)",
+      "categoria": "Casa",
+      "crescimento": 165,
+      "descricao": "Com energia elétrica mais cara, famílias buscam independência energética."
+    },
+    {
+      "termo": "Coworking Especializado (02/10)",
+      "categoria": "Casa",
+      "crescimento": 132,
+      "descricao": "Espaços para nichos específicos: gamers, médicos, advogados."
+    }
+  ]
+}

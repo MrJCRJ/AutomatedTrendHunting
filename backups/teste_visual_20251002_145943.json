@@ -1,0 +1,36 @@
+{
+  "timestamp": "20251002_145943",
+  "tipo": "teste_visual",
+  "tendencias": [
+    {
+      "termo": "🔥 TESTE REAL 14:59:43",
+      "categoria": "Tecnologia",
+      "crescimento": 999,
+      "descricao": "Esta tendência foi criada ÀS 14:59:43 para provar que a automação FUNCIONA de verdade!"
+    },
+    {
+      "termo": "Realidade Virtual para Educação",
+      "categoria": "Tecnologia",
+      "crescimento": 350,
+      "descricao": "Escolas brasileiras adotando VR para ensino. Mercado de R$ 500 milhões até 2025."
+    },
+    {
+      "termo": "Criptomoedas Brasileiras",
+      "categoria": "Finanças",
+      "crescimento": 280,
+      "descricao": "Tokens nacionais ganhando força. Oportunidade em exchanges e carteiras digitais."
+    },
+    {
+      "termo": "Food Delivery Saudável",
+      "categoria": "E-commerce",
+      "crescimento": 210,
+      "descricao": "Alimentação saudável on-demand explodindo pós-pandemia. Nicho premium aquecido."
+    },
+    {
+      "termo": "Coworking para Gamers",
+      "categoria": "Casa",
+      "crescimento": 190,
+      "descricao": "Espaços compartilhados para streamers e gamers. Novo modelo de negócio emergente."
+    }
+  ]
+}
