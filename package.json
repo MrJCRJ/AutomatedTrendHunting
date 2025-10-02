@@ -1,0 +1,19 @@
+{
+  "name": "trendhunter-mvp",
+  "version": "1.0.0",
+  "description": "MVP - Caçador de Tendências para empreendedores brasileiros",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "trends",
+    "google-trends",
+    "business",
+    "mvp",
+    "startup"
+  ],
+  "author": "TrendHunter",
+  "license": "MIT"
+}
