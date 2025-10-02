@@ -45,6 +45,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ### 2. Deploy Automático
 
 #### Opção A: Vercel (Recomendado)
+
 ```bash
 # 1. Conecte seu GitHub ao Vercel
 # 2. Configure as secrets VERCEL_* no GitHub
@@ -52,8 +53,9 @@ VERCEL_PROJECT_ID=seu_project_id
 ```
 
 #### Opção B: Netlify
+
 ```bash
-# 1. Conecte GitHub ao Netlify  
+# 1. Conecte GitHub ao Netlify
 # 2. Configure deploy automático
 # 3. Site atualiza automaticamente
 ```
@@ -61,6 +63,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ### 3. Automação Completa
 
 ✅ **GitHub Actions rodando a cada 6 horas:**
+
 - 📊 Coleta tendências do Google Trends
 - 🔄 Atualiza `index.html` automaticamente
 - 📧 Envia newsletter via Mailchimp
@@ -71,6 +74,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ## 🔧 Funcionamento em Produção
 
 ### Fluxo Automático:
+
 ```
 ⏰ 00:00, 06:00, 12:00, 18:00 UTC
     ⬇️
@@ -82,7 +86,7 @@ VERCEL_PROJECT_ID=seu_project_id
     ⬇️
 📧 Envia newsletter (se configurado)
     ⬇️
-📱 Posta no Telegram (se configurado)  
+📱 Posta no Telegram (se configurado)
     ⬇️
 💎 Envia WhatsApp premium (se configurado)
     ⬇️
@@ -92,6 +96,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ```
 
 ### Monitoramento:
+
 - 📊 **GitHub Actions**: Veja logs em `Actions` tab
 - 🌐 **Site Live**: Vercel/Netlify dashboard
 - 📈 **Analytics**: Google Analytics (G-49T4JYYWMB)
@@ -100,6 +105,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ## 💰 Monetização Automática
 
 ### Canais Ativos 24/7:
+
 1. **💰 Google AdSense**: Receita por pageviews
 2. **📧 Newsletter**: Campanhas automáticas Mailchimp
 3. **📱 Telegram**: Canal público com alertas
@@ -107,9 +113,10 @@ VERCEL_PROJECT_ID=seu_project_id
 5. **🔔 Push Notifications**: Alertas de browser
 
 ### Estimativa de Receita:
+
 ```
 📊 1000 visitors/dia × R$ 0.50 AdSense = R$ 15.000/mês
-📧 500 subscribers × 5% conversion = R$ 1.250/mês  
+📧 500 subscribers × 5% conversion = R$ 1.250/mês
 💎 50 WhatsApp premium × R$ 29.90 = R$ 1.495/mês
 ────────────────────────────────────────────────
 💰 TOTAL POTENCIAL: R$ 17.745/mês
@@ -118,6 +125,7 @@ VERCEL_PROJECT_ID=seu_project_id
 ## 🔍 Debugging Produção
 
 ### Logs GitHub Actions:
+
 ```bash
 # Acesse: github.com/seu-user/AutomatedTrendHunting/actions
 # Veja execuções em tempo real
@@ -125,11 +133,12 @@ VERCEL_PROJECT_ID=seu_project_id
 ```
 
 ### Verificar Funcionamento:
+
 ```bash
 # 1. Site atualizado?
 curl -s https://seu-site.vercel.app | grep "última atualização"
 
-# 2. Actions rodando?  
+# 2. Actions rodando?
 # Verifique tab Actions no GitHub
 
 # 3. Deploy funcionando?
@@ -139,18 +148,21 @@ curl -s https://seu-site.vercel.app | grep "última atualização"
 ## 📋 Checklist de Produção
 
 ### ✅ Pré-requisitos:
+
 - [ ] Secrets configuradas no GitHub
 - [ ] Site deployado (Vercel/Netlify)
 - [ ] Google Analytics ativo
 - [ ] AdSense aprovado e ativo
 
 ### ✅ APIs Configuradas:
+
 - [ ] Mailchimp API key válida
 - [ ] Telegram bot criado e funcionando
 - [ ] WhatsApp Business API configurada
 - [ ] Google Trends funcionando (não precisa API)
 
 ### ✅ Automação Ativa:
+
 - [ ] GitHub Actions executando a cada 6h
 - [ ] Deploy automático funcionando
 - [ ] HTML sendo atualizado automaticamente
@@ -159,6 +171,7 @@ curl -s https://seu-site.vercel.app | grep "última atualização"
 ## 🎯 Status de Produção
 
 ### 🟢 Funcionando 100%:
+
 - ✅ Coleta automática de tendências
 - ✅ Atualização automática do HTML
 - ✅ Deploy automático do site
@@ -166,11 +179,13 @@ curl -s https://seu-site.vercel.app | grep "última atualização"
 - ✅ Push notifications ativas
 
 ### 🟡 Dependente de Configuração:
+
 - ⚠️ Newsletter Mailchimp (precisa API key)
 - ⚠️ Telegram bot (precisa token)
 - ⚠️ WhatsApp Business (precisa configuração)
 
 ### 🎊 Resultado Final:
+
 **Sistema 100% automatizado rodando na nuvem, atualizando tendências a cada 6 horas e monetizando 24/7!**
 
 ---
