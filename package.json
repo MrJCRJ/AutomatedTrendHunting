@@ -5,7 +5,13 @@
   "main": "index.html",
   "scripts": {
     "start": "python3 -m http.server 8000",
-    "dev": "python3 -m http.server 8000"
+    "dev": "python3 -m http.server 8000",
+    "test": "node tests/dashboard-auth.test.js",
+    "check:configs": "node scripts/check-configs.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "zod": "^3.23.8"
   },
   "keywords": [
     "trends",

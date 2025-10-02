@@ -6,6 +6,12 @@
 // (Opcional) DASHBOARD_JWT_SECRET para assinatura mais forte
 
 import crypto from 'crypto';
+import { ok, badRequest, unauthorized, methodNotAllowed, serverError } from '../lib/apiResponse.js';
+
+// Config explícita de runtime (Vercel). Node 18 já é padrão, mas isso torna a intenção clara.
+export const config = {
+  runtime: 'nodejs18.x'
+};
 
 export default function handler(req, res) {
   // Headers básicos (simples; se precisar ampliar para CORS avançado ajustar aqui)
@@ -19,12 +25,11 @@ export default function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    // Health check simples
-    return res.status(200).json({ status: 'ok', requires: 'POST password', expiresInSeconds: 3600 });
+    return ok(res, { status: 'ok', requires: 'POST password', expiresInSeconds: 3600 });
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return methodNotAllowed(res, ['GET', 'POST', 'OPTIONS']);
   }
 
   try {
@@ -41,15 +46,15 @@ export default function handler(req, res) {
     const expected = process.env.DASHBOARD_PASSWORD;
 
     if (!expected) {
-      return res.status(500).json({ error: 'Dashboard password not configured' });
+      return serverError(res, 'Dashboard password not configured');
     }
 
     if (!password) {
-      return res.status(400).json({ error: 'Missing password' });
+      return badRequest(res, 'Missing password');
     }
 
     if (password !== expected) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return unauthorized(res, 'Invalid credentials');
     }
 
     // Gera token simples (HMAC + timestamp)
@@ -59,8 +64,8 @@ export default function handler(req, res) {
     const hmac = crypto.createHmac('sha256', secret).update(payload).digest('hex');
     const token = `${exp}.${hmac}`;
 
-    return res.status(200).json({ token, expiresIn: 3600 });
+    return ok(res, { token, expiresIn: 3600 });
   } catch (e) {
-    return res.status(500).json({ error: 'Internal error', detail: String(e) });
+    return serverError(res, e);
   }
 }
