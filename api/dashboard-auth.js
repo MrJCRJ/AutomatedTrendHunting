@@ -6,7 +6,7 @@
 // (Opcional) DASHBOARD_JWT_SECRET para assinatura mais forte
 
 import crypto from 'crypto';
-import { ok, badRequest, unauthorized, methodNotAllowed, serverError } from '../lib/apiResponse.js';
+import { ok, badRequest, unauthorized, methodNotAllowed, serverError } from './_lib/apiResponse.js';
 
 export default function handler(req, res) {
   // Headers básicos (simples; se precisar ampliar para CORS avançado ajustar aqui)
