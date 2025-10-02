@@ -3,12 +3,14 @@
 Plataforma automatizada para descoberta e distribuição de tendências com monetização integrada.
 
 ## 🚀 Visão Geral
+
 - Coleta automática de tendências (Google Trends)
 - Distribuição multicanal (Newsletter, Telegram, WhatsApp, Push)
 - Monetização via Google AdSense
 - Infraestrutura automatizada (GitHub Actions)
 
 ## 📂 Estrutura
+
 ```
 automation/          # Scripts de coleta e distribuição
 	trend_hunter_pro.py
@@ -34,11 +36,14 @@ docs/                # Documentação detalhada
 ```
 
 ## � Workflows Principais
+
 - `trend-automation.yml` → Executa coleta e monetização a cada 6h
 - `deploy.yml` → Deploy automático (Vercel/Netlify)
 
 ## 🔐 Secrets Necessárias
+
 Configurar em GitHub → Settings → Secrets → Actions:
+
 ```
 MAILCHIMP_API_KEY
 MAILCHIMP_AUDIENCE_ID
@@ -52,6 +57,7 @@ VERCEL_PROJECT_ID (opcional)
 ```
 
 ## 📊 Arquivos Públicos Relevantes
+
 - `index.html`
 - `politica-privacidade.html`
 - `ads.txt`
@@ -59,17 +65,22 @@ VERCEL_PROJECT_ID (opcional)
 - `sitemap.xml`
 
 ## 🛠 Manutenção
+
 Scripts auxiliares (ex: `configurador.py`, `monitor_producao.py`) podem ser movidos depois para `tools/` se ainda forem necessários localmente. Não são exigidos em produção.
 
 ## 📘 Documentação
+
 Leia em `docs/`:
+
 - `PRODUCAO_COMPLETA.md` – Guia de produção
 - `README_MONETIZACAO.md` – Estratégia de monetização
 - `CONFIGURACAO_APIS.md` – Setup seguro
 - `ADSENSE_VERIFICACAO.md` – Checklist AdSense
 
 ## ✅ Status
+
 Produção pronta para operar 24/7 com automação e monetização ativa.
 
 ---
+
 © 2025 TrendHunter
