@@ -1,0 +1,98 @@
+name: 🚀 TrendHunter - Automação Completa
+
+on:
+  schedule:
+    # Executa a cada 6 horas (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Permite execução manual
+  push:
+    branches: [ main ]
+    paths:
+      - 'trend_hunter_pro.py'
+      - 'sistema_monetizacao.py'
+      - '.github/workflows/**'
+
+jobs:
+  trend-hunting:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: 📦 Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytrends beautifulsoup4 requests python-telegram-bot mailchimp-marketing
+        
+    - name: 📊 Update Trends
+      run: |
+        echo "🚀 Iniciando atualização de tendências..."
+        python trend_hunter_pro.py
+        echo "✅ Tendências atualizadas!"
+        
+    - name: 💰 Execute Monetização
+      env:
+        MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+        MAILCHIMP_AUDIENCE_ID: ${{ secrets.MAILCHIMP_AUDIENCE_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        WHATSAPP_ACCESS_TOKEN: ${{ secrets.WHATSAPP_ACCESS_TOKEN }}
+        WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
+      run: |
+        echo "💰 Iniciando sistema de monetização..."
+        
+        # Cria arquivos de configuração a partir das secrets
+        echo "{\"api_key\": \"$MAILCHIMP_API_KEY\", \"audience_id\": \"$MAILCHIMP_AUDIENCE_ID\"}" > config_mailchimp.json
+        echo "{\"bot_token\": \"$TELEGRAM_BOT_TOKEN\", \"channel_id\": \"$TELEGRAM_CHANNEL_ID\"}" > config_telegram.json
+        echo "{\"access_token\": \"$WHATSAPP_ACCESS_TOKEN\", \"phone_number_id\": \"$WHATSAPP_PHONE_ID\"}" > config_whatsapp.json
+        
+        # Executa sistema de monetização
+        python sistema_monetizacao.py
+        echo "✅ Monetização executada!"
+        
+    - name: 📄 Commit Updated Files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "TrendHunter Bot"
+        
+        # Adiciona apenas os arquivos seguros
+        git add index.html
+        git add backups/*.json || true
+        git add relatorios/*.json || true
+        
+        # Commit apenas se houver mudanças
+        if git diff --staged --quiet; then
+          echo "Nenhuma mudança para commitar"
+        else
+          git commit -m "🤖 Automated trend update - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        fi
+        
+    - name: 📊 Generate Report
+      run: |
+        echo "📊 RELATÓRIO DE EXECUÇÃO" >> $GITHUB_STEP_SUMMARY
+        echo "======================" >> $GITHUB_STEP_SUMMARY
+        echo "⏰ **Executado em:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "🔄 **Status:** Sucesso ✅" >> $GITHUB_STEP_SUMMARY
+        
+        # Conta arquivos de backup
+        BACKUPS=$(ls -1 backups/*.json 2>/dev/null | wc -l || echo 0)
+        echo "📁 **Backups:** $BACKUPS arquivos" >> $GITHUB_STEP_SUMMARY
+        
+        # Verifica se index.html foi atualizado
+        if git log --oneline -1 | grep -q "Automated trend update"; then
+          echo "✅ **HTML atualizado:** Sim" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "ℹ️ **HTML atualizado:** Sem mudanças" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🎯 **Próxima execução:** Em 6 horas" >> $GITHUB_STEP_SUMMARY

@@ -16,12 +16,26 @@ import hashlib
 
 class TelegramBot:
     def __init__(self):
-        """Inicializa o bot do Telegram"""
-        self.bot_token = os.getenv('TELEGRAM_BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
-        self.channel_id = os.getenv('TELEGRAM_CHANNEL_ID', '@trendhunter_br')
-        self.base_url = f"https://api.telegram.org/bot{self.bot_token}"
+        """Inicializa bot do Telegram"""
+        print("📱 Inicializando Telegram Bot...")
         
-        print("📱 TrendHunter Telegram Bot - Inicializando...")
+        # Carrega configuração (produção ou local)
+        self.bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
+        self.channel_id = os.getenv('TELEGRAM_CHANNEL_ID')
+        
+        if not self.bot_token or not self.channel_id:
+            # Tenta carregar do arquivo local
+            try:
+                with open('config_telegram.json', 'r') as f:
+                    config = json.load(f)
+                    self.bot_token = config['bot_token']
+                    self.channel_id = config['channel_id']
+            except FileNotFoundError:
+                print("❌ Configuração Telegram não encontrada!")
+                print("💡 Configure via secrets GitHub ou execute: python3 configurador.py")
+                self.bot_token = None
+                self.channel_id = None
+                return
 
     def enviar_mensagem(self, chat_id, texto, parse_mode='HTML'):
         """Envia mensagem para um chat específico"""

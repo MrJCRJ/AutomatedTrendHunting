@@ -15,13 +15,26 @@ import hashlib
 
 class NewsletterMailchimp:
     def __init__(self):
-        """Inicializa o sistema de newsletter"""
-        self.mailchimp_api_key = os.getenv('MAILCHIMP_API_KEY', 'YOUR_API_KEY_HERE')
-        self.audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID', 'YOUR_AUDIENCE_ID_HERE')
-        self.server_prefix = self.mailchimp_api_key.split('-')[-1] if '-' in self.mailchimp_api_key else 'us1'
-        self.base_url = f"https://{self.server_prefix}.api.mailchimp.com/3.0"
+        """Inicializa cliente Mailchimp"""
+        print("📧 Inicializando Newsletter Mailchimp...")
         
-        print("📧 TrendHunter Newsletter - Inicializando...")
+        # Carrega configuração (produção ou local)
+        self.api_key = os.getenv('MAILCHIMP_API_KEY')
+        self.audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
+        
+        if not self.api_key or not self.audience_id:
+            # Tenta carregar do arquivo local
+            try:
+                with open('config_mailchimp.json', 'r') as f:
+                    config = json.load(f)
+                    self.api_key = config['api_key']
+                    self.audience_id = config['audience_id']
+            except FileNotFoundError:
+                print("❌ Configuração Mailchimp não encontrada!")
+                print("� Configure via secrets GitHub ou execute: python3 configurador.py")
+                self.api_key = None
+                self.audience_id = None
+                return
 
     def adicionar_contato(self, email, nome="", fonte="site"):
         """Adiciona contato à lista do Mailchimp"""

@@ -1,0 +1,36 @@
+name: 🌐 Deploy Automático
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'index.html'
+      - 'dashboard.html'
+      - '*.css'
+      - '*.js'
+      - '!node_modules/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout
+      uses: actions/checkout@v4
+      
+    - name: 🚀 Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      if: github.ref == 'refs/heads/main'
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+        
+    - name: 📊 Deploy Status
+      run: |
+        echo "🌐 DEPLOY REALIZADO" >> $GITHUB_STEP_SUMMARY
+        echo "=================" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **Status:** Sucesso" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 **URL:** https://seu-trendhunter.vercel.app" >> $GITHUB_STEP_SUMMARY
+        echo "⏰ **Deploy em:** $(date)" >> $GITHUB_STEP_SUMMARY

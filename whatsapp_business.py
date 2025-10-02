@@ -15,13 +15,26 @@ import hashlib
 
 class WhatsAppBusiness:
     def __init__(self):
-        """Inicializa o sistema WhatsApp Business"""
-        self.access_token = os.getenv('WHATSAPP_ACCESS_TOKEN', 'YOUR_ACCESS_TOKEN_HERE')
-        self.phone_number_id = os.getenv('WHATSAPP_PHONE_NUMBER_ID', 'YOUR_PHONE_NUMBER_ID')
-        self.business_account_id = os.getenv('WHATSAPP_BUSINESS_ACCOUNT_ID', 'YOUR_BUSINESS_ACCOUNT_ID')
-        self.base_url = "https://graph.facebook.com/v18.0"
+        """Inicializa WhatsApp Business API"""
+        print("💎 Inicializando WhatsApp Business...")
         
-        print("📱 WhatsApp Business - Inicializando...")
+        # Carrega configuração (produção ou local)
+        self.access_token = os.getenv('WHATSAPP_ACCESS_TOKEN')
+        self.phone_number_id = os.getenv('WHATSAPP_PHONE_ID')
+        
+        if not self.access_token or not self.phone_number_id:
+            # Tenta carregar do arquivo local
+            try:
+                with open('config_whatsapp.json', 'r') as f:
+                    config = json.load(f)
+                    self.access_token = config['access_token']
+                    self.phone_number_id = config['phone_number_id']
+            except FileNotFoundError:
+                print("❌ Configuração WhatsApp não encontrada!")
+                print("💡 Configure via secrets GitHub ou execute: python3 configurador.py")
+                self.access_token = None
+                self.phone_number_id = None
+                return
 
     def enviar_mensagem_texto(self, numero_destino, mensagem):
         """Envia mensagem de texto simples"""
