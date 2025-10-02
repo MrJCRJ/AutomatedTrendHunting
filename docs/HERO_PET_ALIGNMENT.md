@@ -106,6 +106,7 @@ Se quiser, posso já criar o script de checagem de configs e um exemplo de schem
 - [x] Logger estruturado `lib/log.js`
 - [x] Teste inicial `tests/dashboard-auth.test.js` (execução via `npm test`)
 - [x] Endpoint alternativo Edge `api/dashboard-auth-edge.js`
+- [x] Endpoint de métricas `api/stats.js` e consumo no `dashboard.html`
 
 ## Como Usar
 
