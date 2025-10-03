@@ -58,33 +58,56 @@ DASHBOARD_PASSWORD (proteção do dashboard)
 DASHBOARD_JWT_SECRET (opcional: assinatura forte)
 ```
 
-## 📊 Arquivos Públicos Relevantes
+## 📊 Arquivos Públicos / Migração
 
-- `index.html`
-- `politica-privacidade.html`
+A aplicação passou por uma simplificação: as páginas HTML estáticas foram descontinuadas nesta fase inicial. O dashboard agora é servido 100% via função serverless.
+
+Removidos / migrados:
+
+- `index.html` → substituído pelo endpoint dinâmico apenas interno
+- `dashboard.html` → migrado para `GET /api/dashboard`
+- `politica-privacidade.html` → placeholder mínimo (sem conteúdo efetivo por enquanto)
+
+Mantidos (caso precise para compliance / anúncios futuros):
+
 - `ads.txt`
 - `robots.txt`
-- `sitemap.xml`
-- `dashboard.html` (acesso protegido por senha)
+- `sitemap.xml` (pode ser futuramente regenerado por função)
+
+Endpoint do painel agora:
+
+```
+GET /api/dashboard
+```
+
+Observação: Sem páginas públicas, o projeto está operando em modo “interno / early build”. Quando o marketing/landing voltar, restaurar `index.html` ou introduzir um framework (Next.js) para página pública + painel separado.
 
 ## 🔒 Proteção do Dashboard
 
-O dashboard administrativo (`/dashboard.html`) agora exige autenticação via senha.
+O dashboard administrativo agora é servido por `GET /api/dashboard` e protegido por senha usando o fluxo `/api/dashboard-auth`.
 
 1. Defina a secret `DASHBOARD_PASSWORD` (ex: "SenhaForte123!") no ambiente do deploy (Vercel ou GitHub Actions se for usar em funções customizadas).
 2. (Opcional) Defina `DASHBOARD_JWT_SECRET` para assinatura HMAC diferenciada do valor da senha.
 3. Fluxo:
-   - Usuário acessa `/dashboard.html`
+- Usuário acessa `/api/dashboard`
    - Overlay de login solicita senha
    - Front faz `POST /api/dashboard-auth` → retorna token efêmero (1h)
    - Token armazenado em `localStorage` (se "manter logado") ou `sessionStorage`
 
-### Endpoint
+### Endpoints
+
+Autenticação:
 
 ```
 POST /api/dashboard-auth
 Body: { "password": "<senha>" }
 Resposta: { token: "<exp>.<hmac>", expiresIn: 3600 }
+```
+
+Dashboard HTML dinâmico:
+
+```
+GET /api/dashboard
 ```
 
 ### Renovação de Sessão
@@ -113,7 +136,13 @@ Leia em `docs/`:
 
 ## ✅ Status
 
-Produção pronta para operar 24/7 com automação e monetização ativa.
+Modo interno consolidado. Próximos marcos possíveis:
+
+- Reintroduzir landing pública (SEO, captação newsletter)
+- Criar endpoint de métricas reais (`/api/stats`) consumido pelo painel
+- Implementar ações reais: `/api/executar-tendencias`, `/api/monetizar` etc.
+- Adicionar rate limiting no auth
+- Reativar política de privacidade completa antes de abertura pública
 
 ---
 
