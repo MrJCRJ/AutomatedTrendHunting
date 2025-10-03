@@ -1,4 +1,4 @@
-// Testes para /api/executar-tendencias
+// Testes para /api/operations action stats-update
 import handler from '../api/operations.js';
 import fs from 'fs';
 import path from 'path';
@@ -25,14 +25,13 @@ async function run(method, body = {}) {
 const dataFile = path.join(process.cwd(), 'data', 'stats.json');
 
 beforeEach(() => {
-  // Limpa arquivo de stats para previsibilidade
   try { fs.unlinkSync(dataFile); } catch (e) { }
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 0, newslettersSent: 0, premiumSubs: 0, revenueEstimate: 0, lastUpdated: new Date().toISOString() }));
+  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 10, newslettersSent: 3, premiumSubs: 2, revenueEstimate: 50, lastUpdated: new Date().toISOString() }));
   process.env.METRICS_TOKEN = 'TEST';
 });
 
-describe('API /api/executar-tendencias', () => {
+describe('API /api/operations action stats-update', () => {
   test('Rejeita métodos não-POST', async () => {
     const res = await run('GET');
     expect(res.statusCode).toBe(405);
@@ -40,14 +39,28 @@ describe('API /api/executar-tendencias', () => {
     expect(res.payload.error.code).toBe('METHOD_NOT_ALLOWED');
   });
 
-  test('Incrementa totalTrends entre 1 e 3 via action executar-tendencias', async () => {
+  test('Retorna 401 sem token', async () => {
+    const req = { method: 'POST', headers: {}, body: { action: 'stats-update', payload: { totalTrends: 11 } } };
+    const res = mockRes();
+    await handler(req, res);
+    expect(res.statusCode).toBe(401);
+    expect(res.payload.ok).toBe(false);
+  });
+
+  test('Atualiza parcialmente métricas', async () => {
     const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
-    const res = await run('POST', { action: 'executar-tendencias' });
+    const res = await run('POST', { action: 'stats-update', payload: { totalTrends: before.totalTrends + 5 } });
     expect(res.statusCode).toBe(200);
     expect(res.payload.ok).toBe(true);
-    const inc = res.payload.data.increment.totalTrends;
-    expect([1, 2, 3]).toContain(inc);
-    const after = res.payload.data.stats.totalTrends;
-    expect(after - before.totalTrends).toBe(inc);
+    expect(res.payload.data.stats.totalTrends).toBe(before.totalTrends + 5);
+    // Campos não enviados devem permanecer
+    expect(res.payload.data.stats.newslettersSent).toBe(before.newslettersSent);
+  });
+
+  test('Falha validação com valor negativo', async () => {
+    const res = await run('POST', { action: 'stats-update', payload: { totalTrends: -1 } });
+    expect(res.statusCode).toBe(400);
+    expect(res.payload.ok).toBe(false);
+    expect(res.payload.error.code).toBe('VALIDATION_ERROR');
   });
 });

@@ -15,10 +15,10 @@ function mockRes() {
   return res;
 }
 
-function run(method, body = {}) {
+async function run(method, body = {}) {
   const req = { method, headers: { 'x-admin-token': 'TEST' }, body };
   const res = mockRes();
-  handler(req, res);
+  await handler(req, res);
   return res;
 }
 
@@ -32,15 +32,18 @@ beforeEach(() => {
 });
 
 describe('API /api/monetizar', () => {
-  test('Rejeita métodos não-POST', () => {
-    const res = run('GET');
+  test('Rejeita métodos não-POST', async () => {
+    const res = await run('GET');
     expect(res.statusCode).toBe(405);
+    expect(res.payload.ok).toBe(false);
+    expect(res.payload.error.code).toBe('METHOD_NOT_ALLOWED');
   });
 
-  test('Incrementa newslettersSent e revenueEstimate via action monetizar', () => {
+  test('Incrementa newslettersSent e revenueEstimate via action monetizar', async () => {
     const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
-    const res = run('POST', { action: 'monetizar' });
+    const res = await run('POST', { action: 'monetizar' });
     expect(res.statusCode).toBe(200);
+    expect(res.payload.ok).toBe(true);
     expect(res.payload.data.increment).toEqual({ newsletters: 1, revenue: 5 });
     const stats = res.payload.data.stats;
     expect(stats.newslettersSent).toBe(before.newslettersSent + 1);

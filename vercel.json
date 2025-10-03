@@ -1,9 +1,31 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x",
+      "memory": 128,
+      "maxDuration": 10,
+      "environment": {
+        "APP_VERSION": "dev"
+      }
     }
-  ]
+  },
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(data|documentos_ia|tools|scripts)/.*", "status": 404 },
+    { "src": "/api/(.*)", "headers": {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "no-referrer",
+        "Permissions-Policy": "geolocation=()",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Cache-Control": "no-store"
+      },
+      "dest": "/api/$1" },
+    { "handle": "filesystem" }
+  ],
+  "ignoreCommand": "echo 'Using selective builds'",
+  "github": { "silent": true }
 }
