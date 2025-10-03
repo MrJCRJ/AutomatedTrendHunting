@@ -1,0 +1,80 @@
+export default function handler(req, res) {
+  const html = [
+    '<!DOCTYPE html>',
+    '<html lang="pt-BR">',
+    '<head>',
+    '<meta charset="UTF-8"/>',
+    '<meta name="viewport" content="width=device-width,initial-scale=1.0"/>',
+    '<title>TrendHunter - Início</title>',
+    '<style>',
+    'body{font-family:Segoe UI,Tahoma,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);margin:0;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px}',
+    '.card{background:#1f1f2e;border-radius:20px;padding:42px 46px;max-width:600px;width:100%;box-shadow:0 12px 40px -10px rgba(0,0,0,.55);position:relative;overflow:hidden}',
+    '.card:before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,0));pointer-events:none}',
+    'h1{margin:0 0 18px;font-size:2rem;letter-spacing:.5px}',
+    'p{margin:0 0 18px;line-height:1.55;color:#e5e5f0;font-size:.95rem}',
+    '.actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px}',
+    'a.btn,button.btn{border:none;border-radius:10px;padding:12px 20px;font-weight:600;cursor:pointer;font-size:.8rem;letter-spacing:.5px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:.25s}',
+    '.primary{background:#667eea;color:#fff}',
+    '.secondary{background:#2d2d44;color:#fff}',
+    '.primary:hover{background:#5a6fd8;transform:translateY(-2px)}',
+    '.secondary:hover{background:#373755;transform:translateY(-2px)}',
+    '.small{font-size:.65rem;opacity:.75;margin-top:25px;letter-spacing:.5px}',
+    '#auth-overlay{position:fixed;inset:0;background:rgba(10,10,18,.92);display:flex;align-items:center;justify-content:center;z-index:9999}',
+    '#auth-box{background:#fff;color:#222;max-width:360px;width:100%;padding:34px 38px;border-radius:18px;box-shadow:0 10px 40px -8px rgba(0,0,0,.45);font-family:system-ui;position:relative}',
+    '#auth-box h2{margin:0 0 10px;font-size:1.25rem;display:flex;align-items:center;gap:.5rem}',
+    '#auth-box p{margin:0 0 16px;font-size:.7rem;color:#555;line-height:1.45}',
+    '#auth-form{display:flex;flex-direction:column;gap:.75rem}',
+    '#auth-form input{padding:.8rem .9rem;border:2px solid #e4e6ef;border-radius:10px;font-size:.82rem;letter-spacing:.3px}',
+    '#auth-form button{background:#667eea;color:#fff;border:none;padding:.8rem .9rem;font-weight:600;border-radius:10px;font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;box-shadow:0 4px 14px -3px rgba(102,126,234,.55);transition:.25s}',
+    '#auth-form button:hover{background:#5a6fd8}',
+    '#auth-error{min-height:16px;font-size:.6rem;color:#d63939;font-weight:500}',
+    'label.rem{display:flex;align-items:center;gap:.35rem;font-size:.55rem;color:#666;letter-spacing:.5px;text-transform:uppercase;font-weight:600}',
+    'button.clear-session{background:none;border:none;color:#888;font-size:.55rem;cursor:pointer;text-transform:uppercase;letter-spacing:.5px}',
+    '.info{margin-top:.9rem;padding:.55rem .65rem;background:#f5f7ff;border:1px solid #e3e9ff;border-radius:8px;font-size:.55rem;line-height:1.25;color:#4a4f63}',
+    '@media (max-width:620px){.card{padding:34px}body{padding:18px}h1{font-size:1.7rem}}',
+    '</style>',
+    '</head>',
+    '<body>',
+    '<div id="auth-overlay"><div id="auth-box">',
+    '<h2>🔒 Acesso Restrito</h2>',
+    '<p>Ambiente interno. Autentique-se para acessar o painel e ações.</p>',
+    '<form id="auth-form">',
+    '<input id="auth-password" type="password" placeholder="Senha" autocomplete="current-password" />',
+    '<button type="submit">Entrar</button>',
+    '<div id="auth-error"></div>',
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:-4px">',
+    '<label class="rem"><input id="remember-session" type="checkbox"/>Manter logado</label>',
+    '<button type="button" class="clear-session" id="clear-session">Limpar</button>',
+    '</div>',
+    '</form>',
+    '<div class="info">Auth: POST <code>/api/dashboard-auth</code></div>',
+    '</div></div>',
+    '<div class="card">',
+    '<h1>TrendHunter</h1>',
+    '<p>Plataforma interna para coleta de tendências e distribuição multicanal. A versão pública será reativada futuramente.</p>',
+    '<div class="actions">',
+    '<a class="btn primary" href="/api/dashboard" rel="nofollow">Ir para o Dashboard</a>',
+    '<button class="btn secondary" onclick="execTendencias()">Executar Tendências</button>',
+    '<button class="btn secondary" onclick="execMonetizacao()">Executar Monetização</button>',
+    '</div>',
+    '<div class="small">Modo Interno • Build Serverless</div>',
+    '</div>',
+    '<script>',
+    '(function(){' +
+    'const overlay=document.getElementById("auth-overlay"),f=document.getElementById("auth-form"),pw=document.getElementById("auth-password"),err=document.getElementById("auth-error"),remember=document.getElementById("remember-session"),clearBtn=document.getElementById("clear-session"),K="dashboardAuthToken",KE="dashboardAuthExp";' +
+    'function hasValid(){const t=localStorage.getItem(K)||sessionStorage.getItem(K);if(!t)return false;const exp=parseInt(localStorage.getItem(KE)||sessionStorage.getItem(KE)||"0",10);if(Date.now()>exp){[localStorage,sessionStorage].forEach(s=>{s.removeItem(K);s.removeItem(KE)});return false}return t.split(".").length===2}' +
+    'function unlock(){overlay.style.opacity="0";overlay.style.pointerEvents="none";setTimeout(()=>overlay.remove(),300)}' +
+    'if(hasValid())unlock();' +
+    'f.addEventListener("submit",async ev=>{ev.preventDefault();err.textContent="";const value=pw.value.trim();if(!value){err.textContent="Informe a senha";return}const btn=f.querySelector("button[type=submit]");btn.disabled=true;btn.style.opacity=".6";try{const resp=await fetch("/api/dashboard-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:value})});const data=await resp.json();if(!resp.ok){err.textContent=data.error||"Falha";}else{const store=remember.checked?localStorage:sessionStorage;store.setItem(K,data.token);store.setItem(KE,(Date.now()+data.expiresIn*1000).toString());unlock();}}catch(e){err.textContent="Erro de rede";}finally{btn.disabled=false;btn.style.opacity="1";}});' +
+    'clearBtn.addEventListener("click",()=>{[localStorage,sessionStorage].forEach(s=>{s.removeItem(K);s.removeItem(KE)});err.style.color="#1f6feb";err.textContent="Sessão limpa";pw.focus();});' +
+    '})();',
+    'function logTemp(msg){console.log("[INDEX]",msg);}',
+    'async function execTendencias(){logTemp("Executando tendências...");await fetch("/api/executar-tendencias",{method:"POST"}).catch(()=>{});}',
+    'async function execMonetizacao(){logTemp("Executando monetização...");await fetch("/api/monetizar",{method:"POST"}).catch(()=>{});}',
+    '</script>',
+    '</body></html>'
+  ].join('');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  return res.status(200).send(html);
+}
