@@ -1,5 +1,5 @@
 // Testes para /api/monetizar
-import handler from '../api/monetizar.js';
+import handler from '../api/operations.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -15,8 +15,8 @@ function mockRes() {
   return res;
 }
 
-function run(method) {
-  const req = { method, headers: {}, body: {} };
+function run(method, body = {}) {
+  const req = { method, headers: { 'x-admin-token': 'TEST' }, body };
   const res = mockRes();
   handler(req, res);
   return res;
@@ -28,6 +28,7 @@ beforeEach(() => {
   try { fs.unlinkSync(dataFile); } catch (e) { }
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
   fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 2, newslettersSent: 5, premiumSubs: 1, revenueEstimate: 10, lastUpdated: new Date().toISOString() }));
+  process.env.METRICS_TOKEN = 'TEST';
 });
 
 describe('API /api/monetizar', () => {
@@ -36,13 +37,13 @@ describe('API /api/monetizar', () => {
     expect(res.statusCode).toBe(405);
   });
 
-  test('Incrementa newslettersSent e revenueEstimate corretamente', () => {
+  test('Incrementa newslettersSent e revenueEstimate via action monetizar', () => {
     const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
-    const res = run('POST');
+    const res = run('POST', { action: 'monetizar' });
     expect(res.statusCode).toBe(200);
-    expect(res.payload.increment).toEqual({ newsletters: 1, revenue: 5 });
-    const data = res.payload.data;
-    expect(data.newslettersSent).toBe(before.newslettersSent + 1);
-    expect(data.revenueEstimate).toBeCloseTo(before.revenueEstimate + 5, 5);
+    expect(res.payload.data.increment).toEqual({ newsletters: 1, revenue: 5 });
+    const stats = res.payload.data.stats;
+    expect(stats.newslettersSent).toBe(before.newslettersSent + 1);
+    expect(stats.revenueEstimate).toBeCloseTo(before.revenueEstimate + 5, 5);
   });
 });

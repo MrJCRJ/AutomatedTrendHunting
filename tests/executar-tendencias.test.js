@@ -1,5 +1,5 @@
 // Testes para /api/executar-tendencias
-import handler from '../api/executar-tendencias.js';
+import handler from '../api/operations.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -15,8 +15,8 @@ function mockRes() {
   return res;
 }
 
-function run(method) {
-  const req = { method, headers: {}, body: {} };
+function run(method, body = {}) {
+  const req = { method, headers: { 'x-admin-token': 'TEST' }, body };
   const res = mockRes();
   handler(req, res);
   return res;
@@ -29,6 +29,7 @@ beforeEach(() => {
   try { fs.unlinkSync(dataFile); } catch (e) { }
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
   fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 0, newslettersSent: 0, premiumSubs: 0, revenueEstimate: 0, lastUpdated: new Date().toISOString() }));
+  process.env.METRICS_TOKEN = 'TEST';
 });
 
 describe('API /api/executar-tendencias', () => {
@@ -37,13 +38,13 @@ describe('API /api/executar-tendencias', () => {
     expect(res.statusCode).toBe(405);
   });
 
-  test('Incrementa totalTrends entre 1 e 3', () => {
+  test('Incrementa totalTrends entre 1 e 3 via action executar-tendencias', () => {
     const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
-    const res = run('POST');
+    const res = run('POST', { action: 'executar-tendencias' });
     expect(res.statusCode).toBe(200);
-    const inc = res.payload.increment;
+    const inc = res.payload.data.increment.totalTrends;
     expect([1, 2, 3]).toContain(inc);
-    const after = res.payload.data.totalTrends;
+    const after = res.payload.data.stats.totalTrends;
     expect(after - before.totalTrends).toBe(inc);
   });
 });
