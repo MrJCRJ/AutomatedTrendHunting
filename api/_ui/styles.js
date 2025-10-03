@@ -1,5 +1,5 @@
 // UI Fragment: estilos base compartilhados entre páginas HTML serverless
-export function buildStyles(){
+export function buildStyles() {
   return `:root{--grad:linear-gradient(135deg,#667eea 0%,#764ba2 100%);--bg-panel:#1f1f2e;--accent:#667eea;--accent-hover:#5a6fd8;--danger:#d63939;--ok:#40c057;--warn:#ffd43b;--font:Segoe UI,Tahoma,sans-serif}
 body{font-family:var(--font);background:var(--grad);margin:0;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px}
 .card{background:var(--bg-panel);border-radius:22px;padding:46px 50px;max-width:680px;width:100%;box-shadow:0 18px 50px -12px rgba(0,0,0,.55);position:relative;overflow:hidden}
@@ -28,5 +28,9 @@ a.btn,button.btn{border:none;border-radius:10px;padding:12px 20px;font-weight:60
 label.rem{display:flex;align-items:center;gap:.35rem;font-size:.55rem;color:#666;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
 button.clear-session{background:none;border:none;color:#888;font-size:.55rem;cursor:pointer;text-transform:uppercase;letter-spacing:.5px}
 .info{margin-top:.9rem;padding:.55rem .65rem;background:#f5f7ff;border:1px solid #e3e9ff;border-radius:8px;font-size:.55rem;line-height:1.25;color:#4a4f63}
+.status-nav{display:flex;gap:16px;align-items:center;margin:8px 0 4px}
+.status-nav-item{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:#25253a;font-size:.65rem;font-weight:500;letter-spacing:.4px}
+.status-nav-label{opacity:.9}
+.status-nav-error{color:#fa5252;font-size:.65rem;text-align:center;margin:6px 0}
 @media (max-width:620px){.card{padding:34px}body{padding:18px}h1{font-size:1.7rem}}`;
 }
