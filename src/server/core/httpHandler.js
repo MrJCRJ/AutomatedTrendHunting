@@ -30,9 +30,27 @@ export function httpHandler(fn, opts = {}) {
     res.setHeader('X-Request-Id', requestId);
 
     if (cors) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      const allowed = (process.env.CORS_ALLOWED_ORIGINS || '*')
+        .split(',')
+        .map(o => o.trim())
+        .filter(Boolean);
+      const originHeader = req.headers?.origin;
+      let originToSend = '*';
+      if (allowed[0] !== '*') {
+        if (originHeader && allowed.includes(originHeader)) {
+          originToSend = originHeader;
+        } else {
+          // Origem não permitida: não envia cabeçalhos CORS específicos, mas mantém resposta funcional
+          originToSend = 'null';
+        }
+      }
+      res.setHeader('Access-Control-Allow-Origin', originToSend);
+      if (originToSend !== '*') {
+        res.setHeader('Vary', 'Origin');
+      }
       res.setHeader('Access-Control-Allow-Methods', methods.join(','));
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
+      res.setHeader('Access-Control-Max-Age', '86400');
       if (req.method === 'OPTIONS') return res.status(200).end();
     }
 

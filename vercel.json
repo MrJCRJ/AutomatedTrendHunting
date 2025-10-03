@@ -11,11 +11,19 @@
     }
   },
   "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" }
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/(data|documentos_ia|tools|scripts)/.*", "status": 404 },
-    { "src": "/api/(.*)", "headers": {
+    {
+      "src": "/(data|documentos_ia|tools|scripts)/.*",
+      "status": 404
+    },
+    {
+      "src": "/api/(.*)",
+      "headers": {
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "no-referrer",
@@ -23,9 +31,14 @@
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
         "Cache-Control": "no-store"
       },
-      "dest": "/api/$1" },
-    { "handle": "filesystem" }
+      "dest": "/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    }
   ],
   "ignoreCommand": "echo 'Using selective builds'",
-  "github": { "silent": true }
+  "github": {
+    "silent": true
+  }
 }

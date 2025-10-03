@@ -292,5 +292,89 @@
       "revenueEstimate": 0
     },
     "lastUpdated": "2025-10-03T16:44:04.782Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:18.276Z",
+    "totalTrends": 15,
+    "newslettersSent": 3,
+    "premiumSubs": 2,
+    "revenueEstimate": 50,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:18.275Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:18.431Z",
+    "totalTrends": 2,
+    "newslettersSent": 6,
+    "premiumSubs": 1,
+    "revenueEstimate": 15,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:18.431Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:18.565Z",
+    "totalTrends": 3,
+    "newslettersSent": 0,
+    "premiumSubs": 0,
+    "revenueEstimate": 0,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:18.564Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:23.453Z",
+    "totalTrends": 15,
+    "newslettersSent": 3,
+    "premiumSubs": 2,
+    "revenueEstimate": 50,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:23.451Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:23.602Z",
+    "totalTrends": 2,
+    "newslettersSent": 6,
+    "premiumSubs": 1,
+    "revenueEstimate": 15,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:23.601Z"
+  },
+  {
+    "ts": "2025-10-03T16:49:23.747Z",
+    "totalTrends": 3,
+    "newslettersSent": 0,
+    "premiumSubs": 0,
+    "revenueEstimate": 0,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T16:49:23.746Z"
   }
 ]
