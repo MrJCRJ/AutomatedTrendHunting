@@ -2,16 +2,34 @@
   "name": "trendhunter-mvp",
   "version": "1.0.0",
   "description": "MVP - Caçador de Tendências para empreendedores brasileiros",
-  "main": "index.html",
+  "main": "api/index.js",
   "scripts": {
     "start": "python3 -m http.server 8000",
     "dev": "python3 -m http.server 8000",
-    "test": "node tests/dashboard-auth.test.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage",
     "check:configs": "node scripts/check-configs.js"
   },
   "type": "module",
   "dependencies": {
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@jest/environment": "^29.7.0",
+    "@types/jest": "^29.5.12"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "verbose": true
   },
   "keywords": [
     "trends",

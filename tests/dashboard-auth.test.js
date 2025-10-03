@@ -1,47 +1,67 @@
-// Teste inicial para handler dashboard-auth
-// Requer Node >=18
-
-import assert from 'assert';
-import { ok as httpOk } from 'node:assert';
+// Testes Jest para /api/dashboard-auth
 import handler from '../api/dashboard-auth.js';
 
 function mockRes() {
-  return {
-    statusCode: 0,
-    headers: {},
-    body: '',
-    setHeader(k, v) { this.headers[k] = v; },
-    end(payload) { this.body = payload; },
-  };
+  const res = {};
+  res.headers = {};
+  res.statusCode = 200;
+  res.setHeader = (k, v) => { res.headers[k] = v; };
+  res.status = (code) => { res.statusCode = code; return res; };
+  res.payload = undefined;
+  res.json = (obj) => { res.payload = obj; return res; };
+  res.end = (data) => { res.payload = data; return res; };
+  return res;
 }
 
-function runHandler(method, body, env = {}) {
-  const req = { method, body };
+function run(method, { body, headers } = {}, envOverride = {}) {
+  const req = { method, headers: headers || {}, body };
   const res = mockRes();
-  const prev = { ...process.env };
-  Object.assign(process.env, env);
+  const snapshot = { ...process.env };
+  Object.assign(process.env, envOverride);
   try {
     handler(req, res);
   } finally {
-    process.env = prev;
+    Object.keys(process.env).forEach(k => { if (!(k in snapshot)) delete process.env[k]; });
+    Object.assign(process.env, snapshot);
   }
   return res;
 }
 
-// Simples execução manual (não usando jest/mocha por enquanto)
-(function () {
-  const resGet = runHandler('GET', null);
-  assert.strictEqual(resGet.statusCode, 200, 'GET deve retornar 200');
+describe('API /api/dashboard-auth', () => {
+  test('GET health responde 200 com status ok', () => {
+    process.env.DASHBOARD_PASSWORD = 'X';
+    const res = run('GET');
+    expect(res.statusCode).toBe(200);
+    expect(res.payload.success).toBe(true);
+    expect(res.payload.data.status).toBe('ok');
+  });
 
-  const resNoEnv = runHandler('POST', { password: 'x' });
-  assert.strictEqual(resNoEnv.statusCode, 500, 'Sem env deve falhar 500');
+  test('POST sem senha retorna 400', () => {
+    process.env.DASHBOARD_PASSWORD = 'X';
+    const res = run('POST', { body: {} });
+    expect(res.statusCode).toBe(400);
+    expect(res.payload.success).toBe(false);
+  });
 
-  const password = 'segredo';
-  const resBad = runHandler('POST', { password: 'errado' }, { DASHBOARD_PASSWORD: password });
-  assert.strictEqual(resBad.statusCode, 401, 'Senha errada deve retornar 401');
+  test('POST senha incorreta retorna 401', () => {
+    process.env.DASHBOARD_PASSWORD = 'Segredo';
+    const res = run('POST', { body: { password: 'errada' } });
+    expect(res.statusCode).toBe(401);
+    expect(res.payload.success).toBe(false);
+  });
 
-  const resOk = runHandler('POST', { password }, { DASHBOARD_PASSWORD: password });
-  assert.strictEqual(resOk.statusCode, 200, 'Senha correta deve retornar 200');
+  test('POST senha correta retorna token', () => {
+    process.env.DASHBOARD_PASSWORD = 'Segredo';
+    const res = run('POST', { body: { password: 'Segredo' } });
+    expect(res.statusCode).toBe(200);
+    expect(res.payload.success).toBe(true);
+    expect(res.payload.data.token).toMatch(/\./);
+    expect(res.payload.data.expiresIn).toBe(3600);
+  });
 
-  console.log('dashboard-auth.test.js OK');
-})();
+  test('Sem variável de ambiente retorna 500', () => {
+    delete process.env.DASHBOARD_PASSWORD;
+    const res = run('POST', { body: { password: 'qualquer' } });
+    expect(res.statusCode).toBe(500);
+  });
+});
