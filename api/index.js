@@ -1,6 +1,6 @@
 // Refatorado para facilitar manutenção: seções nomeadas e composição clara.
 
-function buildStyles(){
+function buildStyles() {
   return `:root{--grad:linear-gradient(135deg,#667eea 0%,#764ba2 100%);--bg-panel:#1f1f2e;--accent:#667eea;--accent-hover:#5a6fd8;--danger:#d63939;--ok:#40c057;--warn:#ffd43b;--font:Segoe UI,Tahoma,sans-serif}
 body{font-family:var(--font);background:var(--grad);margin:0;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px}
 .card{background:var(--bg-panel);border-radius:22px;padding:46px 50px;max-width:680px;width:100%;box-shadow:0 18px 50px -12px rgba(0,0,0,.55);position:relative;overflow:hidden}
@@ -32,7 +32,7 @@ button.clear-session{background:none;border:none;color:#888;font-size:.55rem;cur
 @media (max-width:620px){.card{padding:34px}body{padding:18px}h1{font-size:1.7rem}}`;
 }
 
-function buildAuthOverlay(){
+function buildAuthOverlay() {
   return `<div id="auth-overlay"><div id="auth-box">
   <h2>🔒 Acesso Restrito</h2>
   <p>Ambiente interno. Autentique-se para acessar o painel e ações.</p>
@@ -49,7 +49,7 @@ function buildAuthOverlay(){
 </div></div>`;
 }
 
-function buildStatsPreview(){
+function buildStatsPreview() {
   return `<div id="stats-preview" class="stats-preview" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:14px;margin:10px 0 22px">
     <div class="sp" data-key="totalTrends"><div class="n">-</div><div class="l">Tendências</div></div>
     <div class="sp" data-key="newslettersSent"><div class="n">-</div><div class="l">Newsletters</div></div>
@@ -57,7 +57,7 @@ function buildStatsPreview(){
   </div>`;
 }
 
-function buildActions(){
+function buildActions() {
   return `<div class="actions">
     <a class="btn primary" href="/api/dashboard" rel="nofollow">Ir para o Dashboard</a>
     <button class="btn secondary" id="btn-trends">Executar Tendências</button>
@@ -66,7 +66,7 @@ function buildActions(){
   </div>`;
 }
 
-function buildCard(){
+function buildCard() {
   return `<div class="card" id="root-card">
     <h1>TrendHunter <span class="badge">Internal</span></h1>
     <p class="lead">Hub interno para coleta de tendências e distribuição multicanal. A versão pública será reativada futuramente.</p>
@@ -76,7 +76,7 @@ function buildCard(){
   </div>`;
 }
 
-function buildScript(){
+function buildScript() {
   return `<script>(function(){
     const QS=(s,p=document)=>p.querySelector(s);const QSA=(s,p=document)=>[...p.querySelectorAll(s)];
     const overlay=QS('#auth-overlay'),form=QS('#auth-form'),pw=QS('#auth-password'),err=QS('#auth-error'),remember=QS('#remember-session'),clearBtn=QS('#clear-session'),K='dashboardAuthToken',KE='dashboardAuthExp';
@@ -97,7 +97,7 @@ function buildScript(){
   })();</script>`;
 }
 
-function buildHtml(){
+function buildHtml() {
   return `<!DOCTYPE html><html lang="pt-BR"><head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -114,9 +114,9 @@ function buildHtml(){
   </body></html>`;
 }
 
-export default function handler(req,res){
+export default function handler(req, res) {
   const html = buildHtml();
-  res.setHeader('Content-Type','text/html; charset=utf-8');
-  res.setHeader('Cache-Control','no-store');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
   return res.status(200).send(html);
 }

@@ -54,5 +54,61 @@
       "revenueEstimate": 0
     },
     "lastUpdated": "2025-10-03T01:09:02.846Z"
+  },
+  {
+    "ts": "2025-10-03T01:11:50.877Z",
+    "totalTrends": 2,
+    "newslettersSent": 6,
+    "premiumSubs": 1,
+    "revenueEstimate": 15,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T01:11:50.876Z"
+  },
+  {
+    "ts": "2025-10-03T01:11:51.012Z",
+    "totalTrends": 1,
+    "newslettersSent": 0,
+    "premiumSubs": 0,
+    "revenueEstimate": 0,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T01:11:51.011Z"
+  },
+  {
+    "ts": "2025-10-03T01:14:46.849Z",
+    "totalTrends": 2,
+    "newslettersSent": 6,
+    "premiumSubs": 1,
+    "revenueEstimate": 15,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T01:14:46.848Z"
+  },
+  {
+    "ts": "2025-10-03T01:14:46.985Z",
+    "totalTrends": 2,
+    "newslettersSent": 0,
+    "premiumSubs": 0,
+    "revenueEstimate": 0,
+    "delta24h": {
+      "totalTrends": 0,
+      "newslettersSent": 0,
+      "premiumSubs": 0,
+      "revenueEstimate": 0
+    },
+    "lastUpdated": "2025-10-03T01:14:46.984Z"
   }
 ]
