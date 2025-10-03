@@ -141,13 +141,16 @@ Se algum arquivo de config faltar, copie o respectivo `*.example` e ajuste os va
 Escolha: manter Node para máxima compatibilidade; usar Edge se priorizar latência global e simplicidade.
 
 ---
+
 ## Métricas Implementadas
 
 Endpoints:
+
 - GET `/api/stats` → Retorna métricas validadas (Zod) + `delta24h`.
 - POST `/api/stats-update` → Atualiza métricas (header `x-admin-token` deve corresponder a `METRICS_TOKEN`).
 
 Arquivos principais:
+
 - `api/_lib/statsSchema.js` (Zod schema)
 - `api/_lib/statsUtil.js` (carregar/salvar/calcular delta + histórico)
 - `data/stats.json` (snapshot atual)
@@ -155,6 +158,7 @@ Arquivos principais:
 - `scripts/update-stats.js` (atualização local ou remota)
 
 Formato base:
+
 ```json
 {
   "totalTrends": 450,
@@ -172,6 +176,7 @@ Formato base:
 ```
 
 Uso rápido:
+
 ```bash
 METRICS_TOKEN=seu_token node scripts/update-stats.js --totalTrends 450 --revenueEstimate 6000
 ```
@@ -179,6 +184,7 @@ METRICS_TOKEN=seu_token node scripts/update-stats.js --totalTrends 450 --revenue
 Se `METRICS_TOKEN` ou endpoint ausentes → atualização local do `data/stats.json`.
 
 Próximos possíveis incrementos:
+
 1. Guardar também `delta7d` e `delta30d`.
 2. Calcular média por hora de `totalTrends`.
 3. Expor endpoint `GET /api/stats/history?window=24h`.

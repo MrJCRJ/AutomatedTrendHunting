@@ -1,5 +1,5 @@
 // UI Fragment: script base de interatividade para index/dashboard minimalista
-export function buildBaseScript(){
+export function buildBaseScript() {
   return `(function(){
     const QS=(s,p=document)=>p.querySelector(s);const QSA=(s,p=document)=>[...p.querySelectorAll(s)];
     const overlay=QS('#auth-overlay'),form=QS('#auth-form'),pw=QS('#auth-password'),err=QS('#auth-error'),remember=QS('#remember-session'),clearBtn=QS('#clear-session'),K='dashboardAuthToken',KE='dashboardAuthExp';

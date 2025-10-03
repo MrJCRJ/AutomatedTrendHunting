@@ -1,5 +1,5 @@
 // UI Fragment: overlay de autenticação reutilizável
-export function buildAuthOverlay(){
+export function buildAuthOverlay() {
   return `<div id="auth-overlay"><div id="auth-box">
   <h2>🔒 Acesso Restrito</h2>
   <p>Ambiente interno. Autentique-se para acessar o painel e ações.</p>
