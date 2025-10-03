@@ -89,10 +89,11 @@ O dashboard administrativo agora é servido por `GET /api/dashboard` e protegido
 1. Defina a secret `DASHBOARD_PASSWORD` (ex: "SenhaForte123!") no ambiente do deploy (Vercel ou GitHub Actions se for usar em funções customizadas).
 2. (Opcional) Defina `DASHBOARD_JWT_SECRET` para assinatura HMAC diferenciada do valor da senha.
 3. Fluxo:
+
 - Usuário acessa `/api/dashboard`
-   - Overlay de login solicita senha
-   - Front faz `POST /api/dashboard-auth` → retorna token efêmero (1h)
-   - Token armazenado em `localStorage` (se "manter logado") ou `sessionStorage`
+  - Overlay de login solicita senha
+  - Front faz `POST /api/dashboard-auth` → retorna token efêmero (1h)
+  - Token armazenado em `localStorage` (se "manter logado") ou `sessionStorage`
 
 ### Endpoints
 
