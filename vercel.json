@@ -4,10 +4,7 @@
     "api/**/*.js": {
       "runtime": "nodejs18.x",
       "memory": 128,
-      "maxDuration": 10,
-      "environment": {
-        "APP_VERSION": "dev"
-      }
+      "maxDuration": 10
     }
   },
   "builds": [
@@ -40,5 +37,8 @@
   "ignoreCommand": "echo 'Using selective builds'",
   "github": {
     "silent": true
+  },
+  "env": {
+    "APP_VERSION": "dev"
   }
 }
