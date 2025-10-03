@@ -135,15 +135,92 @@ Leia em `docs/`:
 - `CONFIGURACAO_APIS.md` – Setup seguro
 - `ADSENSE_VERIFICACAO.md` – Checklist AdSense
 
-## ✅ Status
+## ✅ Status Atual
 
-Modo interno consolidado. Próximos marcos possíveis:
+Modo interno consolidado (arquitetura 100% serverless para UI + APIs). Implementado:
+
+- Dashboard dinâmico (`GET /api/dashboard`)
+- Autenticação com token efêmero (`POST /api/dashboard-auth`)
+- Rate limiting básico em memória (5 tentativas inválidas / 5min) na autenticação
+- Estatísticas persistidas em JSON (`/api/stats` + utilitários internos)
+- Endpoints de simulação operacional:
+	- `POST /api/executar-tendencias` → incrementa `totalTrends` (1–3)
+	- `POST /api/monetizar` → incrementa `newslettersSent` (+1) e `revenueEstimate` (+5.00)
+- Testes automatizados com Jest cobrindo autenticação, rate limit e endpoints operacionais
+
+Próximos marcos sugeridos:
 
 - Reintroduzir landing pública (SEO, captação newsletter)
-- Criar endpoint de métricas reais (`/api/stats`) consumido pelo painel
-- Implementar ações reais: `/api/executar-tendencias`, `/api/monetizar` etc.
-- Adicionar rate limiting no auth
+- Validar token nos endpoints operacionais (hardening)
+- Persistência de rate limiting em storage distribuído (KV/Redis) para produção
+- Enriquecer `/api/stats` com dados derivados (ex: crescimento semanal)
 - Reativar política de privacidade completa antes de abertura pública
+- Adicionar alertas (email / webhook) de novas tendências
+
+### Política de Rate Limiting (MVP)
+
+Implementação atual é in-memory por instância (não compartilhada entre lambdas). Configuração fixa:
+
+- Janela: 5 minutos
+- Limite: 5 tentativas inválidas (senha incorreta)
+- Resposta ao exceder: 401 com mensagem "Too many attempts"
+- Header adicional: `Retry-After: 300`
+
+Para produção: migrar para solução distribuída (Upstash Redis, Vercel KV, Cloudflare Turnstile + KV, etc.).
+
+### Endpoints Atuais
+
+```
+POST /api/dashboard-auth       # Autenticação (senha -> token curto)
+GET  /api/dashboard            # HTML do painel
+GET  /api/index                # Página de entrada interna (landing temporária)
+GET  /api/stats                # Estatísticas agregadas
+POST /api/stats-update         # Atualização manual (x-admin-token)
+POST /api/executar-tendencias  # Simular processamento de tendências
+POST /api/monetizar            # Simular envio/newsletter & receita
+GET  /api/ping                 # Diagnóstico simples
+GET  /api/_introspect          # Metadados internos
+```
+
+### Testes Automatizados
+
+Executar:
+
+```
+npm test
+```
+
+Cobertura atual:
+
+- Autenticação: casos de sucesso, falha, ausência de env, rate limiting
+- Operacionais: incremento de métricas em `/api/executar-tendencias` e `/api/monetizar`
+
+### Estrutura de Dados (stats.json)
+
+```
+{
+	totalTrends: number,
+	newslettersSent: number,
+	premiumSubs: number,
+	revenueEstimate: number,
+	lastUpdated: string (ISO),
+	delta24h?: {
+		totalTrends: number,
+		newslettersSent: number,
+		premiumSubs: number,
+		revenueEstimate: number
+	}
+}
+```
+
+### Roadmap Técnico Rápido
+
+1. Validar tokens nos endpoints de mutação (execução / monetização)
+2. Migrar rate limit para storage distribuído
+3. Adicionar camada de cache para `/api/stats`
+4. Criar landing pública otimizada para SEO
+5. Introduzir fila/cron real para coleta de tendências
+6. Implementar alertas (email / push) de tendências emergentes
 
 ---
 

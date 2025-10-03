@@ -24,6 +24,10 @@ function run(method, { body, headers } = {}, envOverride = {}) {
     Object.keys(process.env).forEach(k => { if (!(k in snapshot)) delete process.env[k]; });
     Object.assign(process.env, snapshot);
   }
+  // Se payload for string JSON, tenta parse
+  if (typeof res.payload === 'string') {
+    try { res.payload = JSON.parse(res.payload); } catch(_) {}
+  }
   return res;
 }
 
@@ -63,5 +67,18 @@ describe('API /api/dashboard-auth', () => {
     delete process.env.DASHBOARD_PASSWORD;
     const res = run('POST', { body: { password: 'qualquer' } });
     expect(res.statusCode).toBe(500);
+  });
+
+  test('Rate limiting após múltiplas tentativas inválidas', () => {
+    process.env.DASHBOARD_PASSWORD = 'Segredo';
+    // 5 tentativas com senha errada
+    for (let i = 0; i < 5; i++) {
+      const res = run('POST', { body: { password: 'errada' } });
+      expect(res.statusCode).toBe(401);
+    }
+    // 6ª deve retornar mensagem de bloqueio (usamos 401 com mensagem Too many attempts)
+    const bloqueado = run('POST', { body: { password: 'errada' } });
+    expect(bloqueado.statusCode).toBe(401);
+    expect(JSON.stringify(bloqueado.payload).toLowerCase()).toMatch(/too many/);
   });
 });
