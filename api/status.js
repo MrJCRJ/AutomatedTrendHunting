@@ -1,5 +1,5 @@
 import { httpHandler } from '../src/server/core/httpHandler.js';
-import { loadStats } from './_lib/statsUtil.js';
+import { loadStats } from '../src/server/lib/statsUtil.js';
 
 async function statusHandler() {
   // Usa stats como proxy de saúde (ex: arquivo legível)

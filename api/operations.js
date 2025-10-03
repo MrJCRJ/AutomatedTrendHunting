@@ -7,8 +7,8 @@
 // Autenticação simples: header x-admin-token (mesma lógica de stats-update) para TODAS as ações mutáveis.
 
 import { httpHandler } from '../src/server/core/httpHandler.js';
-import { loadStats, saveStats, computeDelta24h, appendHistory } from './_lib/statsUtil.js';
-import { validateMetrics } from './_lib/statsSchema.js';
+import { loadStats, saveStats, computeDelta24h, appendHistory } from '../src/server/lib/statsUtil.js';
+import { validateMetrics } from '../src/server/lib/statsSchema.js';
 
 function requireToken(req) {
   const token = req.headers['x-admin-token'];

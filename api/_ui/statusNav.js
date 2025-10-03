@@ -13,7 +13,7 @@ const STATUS_COLORS = {
   error: '#fa5252'
 };
 
-function dot(status){
+function dot(status) {
   const color = STATUS_COLORS[status] || '#999';
   return `<span class="status-nav-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color}"></span>`;
 }

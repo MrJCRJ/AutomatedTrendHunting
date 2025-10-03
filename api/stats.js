@@ -1,5 +1,5 @@
-import { loadStats, computeDelta24h, saveStats, appendHistory } from './_lib/statsUtil.js';
-import { validateMetrics } from './_lib/statsSchema.js';
+import { loadStats, computeDelta24h, saveStats, appendHistory } from '../src/server/lib/statsUtil.js';
+import { validateMetrics } from '../src/server/lib/statsSchema.js';
 
 export default function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');

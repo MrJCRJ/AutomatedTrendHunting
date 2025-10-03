@@ -1,0 +1,1 @@
+export { buildBaseScript } from '../../../api/_ui/scriptBase.js';

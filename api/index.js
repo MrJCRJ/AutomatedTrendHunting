@@ -1,10 +1,10 @@
-// Versão modular usando fragments em api/_ui
-import { buildStyles } from './_ui/styles.js';
-import { buildAuthOverlay } from './_ui/authOverlay.js';
-import { buildStatsPreview } from './_ui/statsPreview.js';
-import { buildActionsBar } from './_ui/actionsBar.js';
-import { buildBaseScript } from './_ui/scriptBase.js';
-// import { buildStatusNav } from './_ui/statusNav.js'; // Exemplo: futura inclusão de barra de status
+// Versão modular usando fragments movidos para src/server/ui
+import { buildStyles } from '../src/server/ui/styles.js';
+import { buildAuthOverlay } from '../src/server/ui/authOverlay.js';
+import { buildStatsPreview } from '../src/server/ui/statsPreview.js';
+import { buildActionsBar } from '../src/server/ui/actionsBar.js';
+import { buildBaseScript } from '../src/server/ui/scriptBase.js';
+// import { buildStatusNav } from '../src/server/ui/statusNav.js'; // Exemplo: futura inclusão de barra de status
 
 function buildCard() {
   return `<div class="card" id="root-card">
