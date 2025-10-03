@@ -144,8 +144,8 @@ Modo interno consolidado (arquitetura 100% serverless para UI + APIs). Implement
 - Rate limiting básico em memória (5 tentativas inválidas / 5min) na autenticação
 - Estatísticas persistidas em JSON (`/api/stats` + utilitários internos)
 - Endpoints de simulação operacional:
-	- `POST /api/executar-tendencias` → incrementa `totalTrends` (1–3)
-	- `POST /api/monetizar` → incrementa `newslettersSent` (+1) e `revenueEstimate` (+5.00)
+  - `POST /api/executar-tendencias` → incrementa `totalTrends` (1–3)
+  - `POST /api/monetizar` → incrementa `newslettersSent` (+1) e `revenueEstimate` (+5.00)
 - Testes automatizados com Jest cobrindo autenticação, rate limit e endpoints operacionais
 
 Próximos marcos sugeridos:

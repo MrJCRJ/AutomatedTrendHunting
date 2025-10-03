@@ -25,9 +25,9 @@ function run(method) {
 const dataFile = path.join(process.cwd(), 'data', 'stats.json');
 
 beforeEach(() => {
-  try { fs.unlinkSync(dataFile); } catch(e) {}
+  try { fs.unlinkSync(dataFile); } catch (e) { }
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends:2, newslettersSent:5, premiumSubs:1, revenueEstimate:10, lastUpdated:new Date().toISOString() }));
+  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 2, newslettersSent: 5, premiumSubs: 1, revenueEstimate: 10, lastUpdated: new Date().toISOString() }));
 });
 
 describe('API /api/monetizar', () => {
@@ -37,10 +37,10 @@ describe('API /api/monetizar', () => {
   });
 
   test('Incrementa newslettersSent e revenueEstimate corretamente', () => {
-    const before = JSON.parse(fs.readFileSync(dataFile,'utf-8'));
+    const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
     const res = run('POST');
     expect(res.statusCode).toBe(200);
-    expect(res.payload.increment).toEqual({ newsletters:1, revenue:5 });
+    expect(res.payload.increment).toEqual({ newsletters: 1, revenue: 5 });
     const data = res.payload.data;
     expect(data.newslettersSent).toBe(before.newslettersSent + 1);
     expect(data.revenueEstimate).toBeCloseTo(before.revenueEstimate + 5, 5);

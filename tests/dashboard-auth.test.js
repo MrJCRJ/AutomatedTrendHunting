@@ -26,7 +26,7 @@ function run(method, { body, headers } = {}, envOverride = {}) {
   }
   // Se payload for string JSON, tenta parse
   if (typeof res.payload === 'string') {
-    try { res.payload = JSON.parse(res.payload); } catch(_) {}
+    try { res.payload = JSON.parse(res.payload); } catch (_) { }
   }
   return res;
 }

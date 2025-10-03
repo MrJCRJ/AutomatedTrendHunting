@@ -26,9 +26,9 @@ const dataFile = path.join(process.cwd(), 'data', 'stats.json');
 
 beforeEach(() => {
   // Limpa arquivo de stats para previsibilidade
-  try { fs.unlinkSync(dataFile); } catch(e) {}
+  try { fs.unlinkSync(dataFile); } catch (e) { }
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends:0, newslettersSent:0, premiumSubs:0, revenueEstimate:0, lastUpdated:new Date().toISOString() }));
+  fs.writeFileSync(dataFile, JSON.stringify({ totalTrends: 0, newslettersSent: 0, premiumSubs: 0, revenueEstimate: 0, lastUpdated: new Date().toISOString() }));
 });
 
 describe('API /api/executar-tendencias', () => {
@@ -38,11 +38,11 @@ describe('API /api/executar-tendencias', () => {
   });
 
   test('Incrementa totalTrends entre 1 e 3', () => {
-    const before = JSON.parse(fs.readFileSync(dataFile,'utf-8'));
+    const before = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
     const res = run('POST');
     expect(res.statusCode).toBe(200);
     const inc = res.payload.increment;
-    expect([1,2,3]).toContain(inc);
+    expect([1, 2, 3]).toContain(inc);
     const after = res.payload.data.totalTrends;
     expect(after - before.totalTrends).toBe(inc);
   });
